@@ -23,12 +23,20 @@
 //
 void startPapiCounters(){
 
+#ifdef DBG
+    printf("********* STARTING COUNTERS *************\n");
+#endif
+
     // initialize papi library and assert that it's successful
     assert( PAPI_library_init( PAPI_VER_CURRENT ) == PAPI_VER_CURRENT );    
     
     // check that all the events can be counted at once.
     int numCounters = PAPI_num_counters() ;
     assert( _G_EVENT_COUNT <= numCounters );
+    
+#ifdef DBG
+    printf("Number of hardware counters available on this machine: %d", numCounters);
+#endif
 
     for ( int i = 0; i < _G_EVENT_COUNT; i++ ) {
         char name[PAPI_MAX_STR_LEN];
@@ -47,8 +55,11 @@ void startPapiCounters(){
 // This method should be placed at the end of instrumented code
 //
 void stopPapiCounters(){
-    int i;
+#ifdef DBG
+    printf("********* STOPING COUNTERS *************\n");
+#endif
 
+    int i;
     //*******  Stop Counters ******
     assert(PAPI_stop_counters(_G_COUNTERS, _G_EVENT_COUNT) >= PAPI_OK);
     
