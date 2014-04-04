@@ -3,5 +3,6 @@
 
 void startPapiCounters();
 void stopPapiCounters();
+void printAllAvailableCounters();
 
 #endif /* HARDWARE_COUNTERS_PAPI_HELPER */

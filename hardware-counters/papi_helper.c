@@ -72,3 +72,27 @@ void stopPapiCounters(){
     }
 }
 
+void printAllAvailableCounters(){
+    // initialize papi library and assert that it's successful
+    assert( PAPI_library_init( PAPI_VER_CURRENT ) == PAPI_VER_CURRENT );    
+
+    // print header
+    printf( "--- Available events ---\n" );
+    printf( "%-15s %s\n", "Name", "Description" );
+    // loop through all PAPI events supported on this plattform
+    int event = 0 | PAPI_PRESET_MASK; // the first event
+    do {
+        // ignore unsupported events
+        if ( PAPI_query_event( event ) != PAPI_OK ) continue; 
+
+        // get event info
+        PAPI_event_info_t info;
+        (void) PAPI_get_event_info( event, &info);
+
+        // print
+        printf( "%-15s %s\n", info.symbol, info.long_descr );
+    } while ( PAPI_enum_event( &event, PAPI_ENUM_ALL ) == PAPI_OK );
+
+
+}
+
