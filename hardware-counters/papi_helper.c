@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 //
 // This method should be placed at the start of instrumented code
@@ -28,6 +29,15 @@ void startPapiCounters(){
     // check that all the events can be counted at once.
     int numCounters = PAPI_num_counters() ;
     assert( _G_EVENT_COUNT <= numCounters );
+
+    for ( int i = 0; i < _G_EVENT_COUNT; i++ ) {
+        char name[PAPI_MAX_STR_LEN];
+        (void) PAPI_event_code_to_name( _G_EVENTS[i], name );
+        if(PAPI_query_event( _G_EVENTS[i] ) < PAPI_OK) {
+            fprintf(stderr, "Event %s could not be counted on this machine.\n", name);
+            abort();
+        }
+    }
 
     //*******  Start Counters ******
     assert( PAPI_start_counters(_G_EVENTS, _G_EVENT_COUNT) >= PAPI_OK);
