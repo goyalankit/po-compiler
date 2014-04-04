@@ -1,3 +1,6 @@
+#ifndef HARDWARE_COUNTERS_EVENTS
+#define HARDWARE_COUNTERS_EVENTS
+
 static int _G_EVENTS[] = { PAPI_TOT_INS,
                           PAPI_TOT_CYC,  
                           PAPI_L2_TCM,
@@ -6,3 +9,5 @@ static int _G_EVENTS[] = { PAPI_TOT_INS,
 #define _G_EVENT_COUNT sizeof(_G_EVENTS) / sizeof( int )
 
 static long long _G_COUNTERS[_G_EVENT_COUNT];
+
+#endif /* HARDWARE_COUNTERS_EVENTS */
