@@ -2,8 +2,8 @@
 #include "papi_helper.h"
 
 int main(){
-    //startPapiCounters();
-    //stopPapiCounters();
-    printAllAvailableCounters();
+    startPapiCounters();
+    stopPapiCounters();
+    //printAllAvailableCounters();
     return 0;
 }

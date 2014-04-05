@@ -18,21 +18,51 @@
 #include <assert.h>
 #include <string.h>
 
+#define _CALL_PAPI( CALL ) ({                                            \
+    int err = (CALL);                                                    \
+    if ( err < PAPI_OK ) {                                               \
+        fprintf( stderr, #CALL " failed: %s\n", PAPI_strerror( err ) );  \
+        abort();                                                         \
+    }                                                                    \
+    err;                                                                 \
+})
+
+void initializeCounters(int num){
+    int i=0,j=0;
+    for( i = num * 9, j=0; i < NUM_EVENTS * (num+1); i++){
+#ifdef DBG
+        printf("i=%d, j=%d", i, j);
+#endif
+        _G_EVENTS[j++] = _G_EVENTS_AVAIL[i];
+    }
+}
+
+void printGEvents(){
+    int i;
+    for(i=0; i<NUM_EVENTS; i++){
+        char name[PAPI_MAX_STR_LEN];
+        (void) PAPI_event_code_to_name( _G_EVENTS[i], name );
+        printf("Event %d: %s\n",i ,name);
+    }
+}
+
 //
 // This method should be placed at the start of instrumented code
 //
 void startPapiCounters(){
-
+    initializeCounters(0);
 #ifdef DBG
+    printGEvents();
     printf("********* STARTING COUNTERS *************\n");
 #endif
-
+    assert(NUM_EVENTS == _G_EVENT_COUNT);
     // initialize papi library and assert that it's successful
-    assert( PAPI_library_init( PAPI_VER_CURRENT ) == PAPI_VER_CURRENT );    
+    _CALL_PAPI(PAPI_library_init( PAPI_VER_CURRENT ));    
     
     // check that all the events can be counted at once.
     int numCounters = PAPI_num_counters() ;
     assert( _G_EVENT_COUNT <= numCounters );
+
     
 #ifdef DBG
     printf("Number of hardware counters available on this machine: %d", numCounters);
@@ -40,7 +70,7 @@ void startPapiCounters(){
 
     for ( int i = 0; i < _G_EVENT_COUNT; i++ ) {
         char name[PAPI_MAX_STR_LEN];
-        (void) PAPI_event_code_to_name( _G_EVENTS[i], name );
+        (void) _CALL_PAPI(PAPI_event_code_to_name( _G_EVENTS[i], name ));
         if(PAPI_query_event( _G_EVENTS[i] ) < PAPI_OK) {
             fprintf(stderr, "Event %s could not be counted on this machine.\n", name);
             abort();
@@ -48,7 +78,7 @@ void startPapiCounters(){
     }
 
     //*******  Start Counters ******
-    assert( PAPI_start_counters(_G_EVENTS, _G_EVENT_COUNT) >= PAPI_OK);
+    (void) _CALL_PAPI(PAPI_start_counters(_G_EVENTS, _G_EVENT_COUNT));
 }
 
 //
