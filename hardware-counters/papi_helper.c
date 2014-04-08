@@ -28,8 +28,33 @@
 })
 
 void initializeCounters(int num){
-    int i=0,j=0;
-    for( i = num * 9, j=0; i < NUM_EVENTS * (num+1); i++){
+#ifdef DBG
+    printf("Number of events: %d \n Iteration number: %d\n", NUM_EVENTS, numIteration);
+#endif
+
+    int i=0, j=0, delta=0;
+    switch(numIteration){
+        default:
+            delta = 0;
+            break;
+        case 1:
+            delta = 0;
+            break;
+        case 2:
+            delta = 0 + IT1;
+            break;
+        case 3:
+            delta = 0 + IT1 + IT2;
+            break;
+    }
+
+    i=delta;
+
+#ifdef DBG
+    printf("Running i from: %d\n", i);
+#endif
+
+    for(j=0; i < NUM_EVENTS+delta ; i++){
 #ifdef DBG
         printf("i=%d, j=%d", i, j);
 #endif

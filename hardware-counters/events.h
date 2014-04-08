@@ -1,11 +1,22 @@
 #ifndef HARDWARE_COUNTERS_EVENTS
 #define HARDWARE_COUNTERS_EVENTS
 
-#define CURRENT_NUM 0
+#define IT1 9
+#define IT2 6
+#define IT3 10
 
-static int NUM_EVENTS[] = {9, 9, 8};
+#ifdef I1
+#define NUM_EVENTS IT1
+static int numIteration = 1;
+#elif I2
+#define NUM_EVENTS IT2
+static int numIteration = 2;
+#else
+#define NUM_EVENTS IT3
+static int numIteration = 3;
+#endif
 
-static int _G_EVENTS[NUM_EVENTS[CURRENT_NUM]];
+static int _G_EVENTS[NUM_EVENTS];
 
 static int _G_EVENTS_AVAIL[] = {                           
     PAPI_TOT_CYC,
