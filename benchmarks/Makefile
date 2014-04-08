@@ -3,4 +3,3 @@ btree:
 
 pidigits:
 	clang -pipe -Wall -O0 -fomit-frame-pointer -march=native  pidigits.c -o pidigits.gcc_run -lgmp
-
