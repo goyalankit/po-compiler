@@ -7,12 +7,24 @@
 #include "omp.h"
 #include <time.h>
 
-#define NUM_THREADS 8
+#define NUM_THREADS 8 //default number of threads
 
 using namespace std;
 
+/*------- GLOBAL VARIABES --------*/
+
 // vector with permutations of passorder
 vector<string> passOrder;
+
+/*--------- General Purpose Methods --------*/
+
+// print operator for vector<string>
+void operator<<(ostream& os, vector<string> V){
+    for( vector<string>::iterator it = V.begin(); it != V.end() ; ++it ) {
+        os << *it << endl;
+    }
+}
+
 
 void runOptimizationPasses(){
 
@@ -22,7 +34,6 @@ void runOptimizationPasses(){
 
 #pragma omp parallel for private(t1, t2, diff)
     for( int i = 0; i < passOrder.size() ; ++i ) {
-
         string command = string("opt ") + passOrder[i] + string(" ./matrix.o >> /dev/null");
 
 #ifdef DEBUG
@@ -36,13 +47,14 @@ void runOptimizationPasses(){
         diff = (float)t2 - (float)t1;
         optExecMap.insert( pair<string,float>(passOrder[i], diff) );
     }
-}
 
-// print operator for vector<string>
-void operator<<(ostream& os, vector<string> V){
-    for( vector<string>::iterator it = V.begin(); it != V.end() ; ++it ) {
-        os << *it << endl;
-    }
+#ifdef DEBUG
+        for (map<string, float>::iterator it = optExecMap.begin() ; it != optExecMap.end() ; ++it){
+            std::cout << it->first << " : " << it->second << std::endl;
+        
+        }
+#endif
+
 }
 
 int main(int argc, char** argv){
