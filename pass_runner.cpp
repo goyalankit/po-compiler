@@ -10,8 +10,19 @@
 #define NUM_THREADS 8 //default number of threads
 
 #ifdef DEBUG
+#ifndef TIME
 #define TIME
 #endif
+#endif
+
+using namespace std;
+
+/*------- GLOBAL VARIABES --------*/
+// vector with permutations of passorder
+vector<string> passOrder;
+char *binaryName;
+char *binaryArgs;
+
 
 #define _SYSTEM_CALL( CMD ) ({             \
     int err = ( system( CMD.c_str() ) );   \
@@ -22,12 +33,23 @@
     err;                                   \
 })                                         \
 
-using namespace std;
 
-/*------- GLOBAL VARIABES --------*/
+struct COMMAND { 
+    string opt; 
+    string lli;
 
-// vector with permutations of passorder
-vector<string> passOrder;
+    // constructor
+    COMMAND(string, long double);
+};
+
+inline COMMAND::COMMAND(string pass_order, long double threadId){
+    // opt -pass1 -pass2 ./bcfile -o temp.out.threadId >> /dev/null
+    opt = string("opt ") + pass_order + " ./"  + binaryName + " -o temp.out." + to_string(threadId) + " >> /dev/null";
+    // Command to execute the file.
+    lli = string("lli temp.out.") + to_string(threadId) + " " + binaryArgs;
+}
+
+
 
 /*--------- General Purpose Methods --------*/
 
@@ -58,19 +80,16 @@ void runOptimizationPasses(){
         tid = omp_get_thread_num();
 
         // Run the passes with order from file.
-        // opt -pass1 -pass2 ./bcfile -o temp.out.threadId >> /dev/null
-        string opt_command = string("opt ") + passOrder[i] + " ./matrix.o -o temp.out." + to_string(tid) + " >> /dev/null";
+        COMMAND Cmd(passOrder[i], tid);
 
-        // Command to execute the file.
-        string lli_command = string("lli temp.out.") + to_string(tid) + " 12";
 #ifdef DEBUG
-        cout << "Running Command: " << opt_command  << " in thread number " << tid << endl;
+        cout << "Running Command: " << Cmd.opt << "\n" << Cmd.lli  << " in thread number " << tid << endl;
 #endif
 
-        _SYSTEM_CALL( opt_command );
+        _SYSTEM_CALL( Cmd.opt );
 
         t1 = clock();
-        _SYSTEM_CALL( lli_command );
+        _SYSTEM_CALL( Cmd.lli );
         t2 = clock();
 
         diff = (float)t2 - (float)t1;
@@ -90,13 +109,19 @@ void runOptimizationPasses(){
 int main(int argc, char** argv){
 
     int numThreads = NUM_THREADS;
+
     if(argc > 1){
-        numThreads = atoi(argv[1]);
+        binaryName = argv[1];
+        if (argc > 2) binaryArgs = argv[2];
+        if(argc > 3) numThreads = atoi(argv[3]);
+    }else{
+        std::cout << "Usage: pass_runner <Binary Name> <NumThreads(optional)>" << std::endl;
+        abort();
     }
 
     // open a file in read mode.
     ifstream infile; 
-    infile.open("events.1");
+    infile.open("events.2");
 
     string opt_order;
     while(getline(infile,opt_order)) {
