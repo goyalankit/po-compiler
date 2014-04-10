@@ -6,16 +6,21 @@
 #include <map>
 #include "omp.h"
 #include <time.h>
+#include <chrono>
+#include <ctime>
+#include <ratio>
 
 #define NUM_THREADS 8 //default number of threads
-
+#if(0)
 #ifdef DEBUG
 #ifndef TIME
 #define TIME
 #endif
 #endif
+#endif
 
 using namespace std;
+using namespace std::chrono;
 
 /*------- GLOBAL VARIABES --------*/
 // vector with permutations of passorder
@@ -88,12 +93,16 @@ void runOptimizationPasses(){
 
         _SYSTEM_CALL( Cmd.opt );
 
-        t1 = clock();
+//        t1 = clock();
+         high_resolution_clock::time_point t1 = high_resolution_clock::now();
         _SYSTEM_CALL( Cmd.lli );
-        t2 = clock();
+         high_resolution_clock::time_point t2 = high_resolution_clock::now();
+//        t2 = clock();
+         duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
 
-        diff = (float)t2 - (float)t1;
-        optExecMap.insert( pair<string,float>(passOrder[i], diff) );
+//        diff = (float)t2 - (float)t1;
+            std::cout << passOrder[i] << " : " << time_span.count() << std::endl;
+//        optExecMap.insert( pair<string,floaat>(passOrder[i], time_span.count() ) );
     }
 
 
