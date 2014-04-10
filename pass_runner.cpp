@@ -29,7 +29,7 @@ char *binaryName;
 char *binaryArgs;
 
 
-#define _SYSTEM_CALL( CMD ) ({             \
+#define _SYSTEM_CALL( CMD ) ( {            \
     int err = ( system( CMD.c_str() ) );   \
     if ( err < 0  ) {                      \ 
         fprintf(stderr, #CMD, " failed."); \
@@ -47,11 +47,11 @@ struct COMMAND {
     COMMAND(string, long double);
 };
 
-inline COMMAND::COMMAND(string pass_order, long double threadId){
+inline COMMAND::COMMAND(string pass_order, long double threadId) {
     // opt -pass1 -pass2 ./bcfile -o temp.out.threadId >> /dev/null
     opt = string("opt ") + pass_order + " ./"  + binaryName + " -o temp.out." + to_string(threadId) + " >> /dev/null";
     // Command to execute the file.
-    lli = string("lli temp.out.") + to_string(threadId) + " " + binaryArgs;
+    lli = string("lli temp.out.") + to_string(threadId) + " " + binaryArgs + to_string(threadId);
 }
 
 
@@ -59,14 +59,14 @@ inline COMMAND::COMMAND(string pass_order, long double threadId){
 /*--------- General Purpose Methods --------*/
 
 // print operator for vector<string>
-void operator<<(ostream& os, vector<string> V){
-    for( vector<string>::iterator it = V.begin(); it != V.end() ; ++it ) {
+void operator<<(ostream& os, vector<string> V) {
+    for( vector<string>::iterator it = V.begin(); it != V.end(); ++it ) {
         os << *it << endl;
     }
 }
 
 
-void cleanUpTheMess(){
+void cleanUpTheMess() {
     string rm_command = string("rm -rf temp.out.*");
 #ifdef DEBUG
     cout << "Cleaning temporary files.." << endl;
@@ -75,7 +75,7 @@ void cleanUpTheMess(){
     _SYSTEM_CALL ( rm_command) ;
 }
 
-void runOptimizationPasses(){
+void runOptimizationPasses() {
     map<string, float> optExecMap;
     clock_t t1,t2;
     float diff;
@@ -93,21 +93,23 @@ void runOptimizationPasses(){
 
         _SYSTEM_CALL( Cmd.opt );
 
-//        t1 = clock();
-         high_resolution_clock::time_point t1 = high_resolution_clock::now();
+//         t1 = clock();
+//         high_resolution_clock::time_point t1 = high_resolution_clock::now();
+        double start = omp_get_wtime( );
         _SYSTEM_CALL( Cmd.lli );
-         high_resolution_clock::time_point t2 = high_resolution_clock::now();
+        high_resolution_clock::time_point t2 = high_resolution_clock::now();
 //        t2 = clock();
-         duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
+        double end = omp_get_wtime( );
+//         duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
 
 //        diff = (float)t2 - (float)t1;
-            std::cout << passOrder[i] << " : " << time_span.count() << std::endl;
+        std::cout << passOrder[i] << " : " << (end - start) << std::endl;
 //        optExecMap.insert( pair<string,floaat>(passOrder[i], time_span.count() ) );
     }
 
 
 #ifdef TIME
-    for (map<string, float>::iterator it = optExecMap.begin() ; it != optExecMap.end() ; ++it){
+    for (map<string, float>::iterator it = optExecMap.begin(); it != optExecMap.end() ; ++it) {
         std::cout << it->first << " : " << it->second << std::endl;
     }
 #endif
@@ -115,15 +117,17 @@ void runOptimizationPasses(){
     cleanUpTheMess();
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
 
     int numThreads = NUM_THREADS;
 
-    if(argc > 1){
+    if(argc > 1) {
         binaryName = argv[1];
-        if (argc > 2) binaryArgs = argv[2];
-        if(argc > 3) numThreads = atoi(argv[3]);
-    }else{
+        if (argc > 2) 
+            binaryArgs = argv[2];
+        if(argc > 3) 
+            numThreads = atoi(argv[3]);
+    } else {
         std::cout << "Usage: pass_runner <Binary Name> <NumThreads(optional)>" << std::endl;
         abort();
     }
@@ -143,7 +147,7 @@ int main(int argc, char** argv){
 #endif
 
     // set openmp number of threads
-    omp_set_num_threads(NUM_THREADS);
+    omp_set_num_threads(numThreads);
 
     runOptimizationPasses();
 
