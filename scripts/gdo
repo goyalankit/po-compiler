@@ -1,0 +1,53 @@
+#!/work/02681/ankitg/programs/bin/ruby
+
+require 'pry'
+require 'open3'
+
+$filename = ARGV[0]
+
+$target_passes = [   "-loop-unroll", 
+                    "-loop-unswitch", 
+                    "-memcpyopt" , 
+                    "-reassociate" , 
+                    "-sccp" , 
+                    "-bb-vectorize", 
+                    "-die", 
+                    "-dse", 
+                    "-inline", 
+                    "-licm", 
+                    "-loop-rotate"
+                ]                
+
+def get_pass_array
+    cmd = "clang -O3 -emit-llvm -c #{$filename}  -mllvm --debug-pass=Arguments"
+    output = ""
+
+    Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
+        output = stderr.read
+    end
+
+    p_args = output.split("\n").select { |a| a.include?("Pass Arguments") }
+    p_args.map {|i| i.gsub("Pass Arguments: ", "").split(" ")}
+end
+
+
+def default_pass_priority_map
+    pass_priority = {}
+    counter = 0
+    get_pass_array.each do |pass_a|
+        pass_a.each do |pass|
+            next unless pass_priority[pass].nil?
+            pass_priority[pass] = counter
+            counter += 1
+        end
+    end
+    pass_priority
+end
+
+def default_order
+    dppm = default_pass_priority_map
+    dppm.delete_if {|n, p| !$target_passes.include?(n) }
+    dppm.sort_by {|k,v| v}.map {|k| k[0]}
+end
+
+puts "#{default_order.count} passes found", "", default_order.join(" "), ""

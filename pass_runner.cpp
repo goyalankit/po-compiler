@@ -1,8 +1,10 @@
+"Copyright [2014] <Copyright UT>"
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <map>
 #include "omp.h"
 #include <time.h>
@@ -10,7 +12,7 @@
 #include <ctime>
 #include <ratio>
 
-#define NUM_THREADS 8 //default number of threads
+#define NUM_THREADS 8 // default number of threads
 #if(0)
 #ifdef DEBUG
 #ifndef TIME
@@ -137,7 +139,7 @@ int main(int argc, char** argv) {
     infile.open("events.2");
 
     string opt_order;
-    while(getline(infile,opt_order)) {
+    while(getline(infile, opt_order)) {
         passOrder.push_back(opt_order);
     }
 
