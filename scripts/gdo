@@ -19,13 +19,24 @@ $target_passes = [   "-loop-unroll",
                 ]                
 
 def get_pass_array
-    cmd = "clang -O3 -emit-llvm -c #{$filename}  -mllvm --debug-pass=Arguments"
+    cmd = "clang -O3 -emit-llvm -c #{$filename}  -mllvm --debug-pass=Arguments -o temp.o"
     output = ""
 
-    Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
-        output = stderr.read
+    begin
+        Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
+            output = stderr.read
+        end
+
+        %x(rm -rf temp.o)
+    rescue Exception => ex
+        puts ex.message
+        puts "Run: module load llvm"
+        abort
     end
 
+    if output.include?("clang: error: no such file or directory")
+        abort("#{$filename} doesn't exist\nExact error: "+output)
+    end
     p_args = output.split("\n").select { |a| a.include?("Pass Arguments") }
     p_args.map {|i| i.gsub("Pass Arguments: ", "").split(" ")}
 end
