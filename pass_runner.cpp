@@ -1,5 +1,3 @@
-"Copyright [2014] <Copyright UT>"
-
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -11,6 +9,14 @@
 #include <chrono>
 #include <ctime>
 #include <ratio>
+
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include "boost/lexical_cast.hpp"
+
+using namespace boost::algorithm;
+
+#include "pass_runner.h"
 
 #define NUM_THREADS 8 // default number of threads
 #if(0)
@@ -29,6 +35,8 @@ using namespace std::chrono;
 vector<string> passOrder;
 char *binaryName;
 char *binaryArgs;
+char *input_combination_file;
+string dir_name;
 
 
 #define _SYSTEM_CALL( CMD ) ( {            \
@@ -51,9 +59,25 @@ struct COMMAND {
 
 inline COMMAND::COMMAND(string pass_order, long double threadId) {
     // opt -pass1 -pass2 ./bcfile -o temp.out.threadId >> /dev/null
-    opt = string("opt ") + pass_order + " ./"  + binaryName + " -o temp.out." + to_string(threadId) + " >> /dev/null";
+
+    string pname = " ";// = A::PASS_MAP[0];
+    vector<string> strs;
+    boost::split(strs,pass_order,boost::is_any_of(" "));
+
+    for(vector<string>::iterator pit = strs.begin(); pit != strs.end(); ++pit){
+        string pass_num_string = *pit;
+        int pnumber = atoi(pass_num_string.c_str());
+        pname = pname + " " + A::PASS_MAP[pnumber];
+    }
+#ifdef DEBUG
+    cout << pname << endl;
+#endif
+    // combination_file_name/temp.out.input_combination_filename
+    string temp_name = dir_name + string("/temp.out.") + input_combination_file;
+
+    opt = string("opt ") + pname + " ./"  + binaryName + " -o "+ temp_name  + "" + to_string(threadId) + " >> /dev/null";
     // Command to execute the file.
-    lli = string("lli temp.out.") + to_string(threadId) + " " + binaryArgs + to_string(threadId);
+    lli = string("lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
 }
 
 
@@ -69,7 +93,8 @@ void operator<<(ostream& os, vector<string> V) {
 
 
 void cleanUpTheMess() {
-    string rm_command = string("rm -rf temp.out.*");
+    string rm_command = string("rm -rf ") + dir_name;
+
 #ifdef DEBUG
     cout << "Cleaning temporary files.." << endl;
     cout << "Running Command: " << rm_command << endl;
@@ -78,7 +103,7 @@ void cleanUpTheMess() {
 }
 
 void runOptimizationPasses() {
-    map<string, float> optExecMap;
+    map<string, double> optExecMap;
     clock_t t1,t2;
     float diff;
     long double tid;
@@ -95,23 +120,16 @@ void runOptimizationPasses() {
 
         _SYSTEM_CALL( Cmd.opt );
 
-//         t1 = clock();
-//         high_resolution_clock::time_point t1 = high_resolution_clock::now();
         double start = omp_get_wtime( );
         _SYSTEM_CALL( Cmd.lli );
-        high_resolution_clock::time_point t2 = high_resolution_clock::now();
-//        t2 = clock();
         double end = omp_get_wtime( );
-//         duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
 
-//        diff = (float)t2 - (float)t1;
-        std::cout << passOrder[i] << " : " << (end - start) << std::endl;
-//        optExecMap.insert( pair<string,floaat>(passOrder[i], time_span.count() ) );
+//        optExecMap.insert( pair<string, double>(passOrder[i], (end-start) ) );
     }
 
 
 #ifdef TIME
-    for (map<string, float>::iterator it = optExecMap.begin(); it != optExecMap.end() ; ++it) {
+    for (map<string, double>::iterator it = optExecMap.begin(); it != optExecMap.end() ; ++it) {
         std::cout << it->first << " : " << it->second << std::endl;
     }
 #endif
@@ -125,10 +143,10 @@ int main(int argc, char** argv) {
 
     if(argc > 1) {
         binaryName = argv[1];
-        if (argc > 2) 
-            binaryArgs = argv[2];
-        if(argc > 3) 
-            numThreads = atoi(argv[3]);
+        input_combination_file = argv[2];
+        binaryArgs = argv[3];
+        numThreads = atoi(argv[4]);
+//        std::cout << binaryName << " " << binaryArgs << " " << numThreads << " " <<input_combination_file << endl;
     } else {
         std::cout << "Usage: pass_runner <Binary Name> <NumThreads(optional)>" << std::endl;
         abort();
@@ -136,7 +154,7 @@ int main(int argc, char** argv) {
 
     // open a file in read mode.
     ifstream infile; 
-    infile.open("events.2");
+    infile.open(input_combination_file);
 
     string opt_order;
     while(getline(infile, opt_order)) {
@@ -150,6 +168,10 @@ int main(int argc, char** argv) {
 
     // set openmp number of threads
     omp_set_num_threads(numThreads);
+    
+    dir_name = string(input_combination_file) + "dir"; 
+     string create_dir_cmd = string("mkdir ") + dir_name;
+    _SYSTEM_CALL(create_dir_cmd );
 
     runOptimizationPasses();
 
