@@ -6,7 +6,6 @@
 
 using namespace std;
 
-typedef priority_queue< RECORD, vector< RECORD >, Comparator> PQUEUE;
 
 struct A{
     static std::map<int,std::string> create_map()
@@ -54,6 +53,7 @@ class Comparator
     }
 };
 
+typedef priority_queue< RECORD, vector< RECORD >, Comparator> PQUEUE;
 
 struct COMMAND { 
   string opt; 
