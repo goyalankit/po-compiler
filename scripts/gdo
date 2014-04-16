@@ -5,6 +5,8 @@ require 'open3'
 
 $filename = ARGV[0]
 
+abort("Usage: gdo <input file(.c)>") if ARGV[0].nil?
+
 $target_passes = [   "-loop-unroll", 
                     "-loop-unswitch", 
                     "-memcpyopt" , 
@@ -61,4 +63,6 @@ def default_order
     dppm.sort_by {|k,v| v}.map {|k| k[0]}
 end
 
-puts "#{default_order.count} passes found", "", default_order.join(" "), ""
+puts "#{default_order.count} passes found", ""
+p default_order + [" "]
+puts ""

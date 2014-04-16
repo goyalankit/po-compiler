@@ -155,7 +155,8 @@ void runOptimizationPasses() {
     double start = omp_get_wtime( );
 
     t1 = clock();
-    _SYSTEM_CALL( (Cmd.opt + " && " +Cmd.lli) );
+    string final_cmd = Cmd.opt + " && " +Cmd.lli;
+    _SYSTEM_CALL( final_cmd );
 
     t2 = clock();
     double diff = (double)t2 - (double)t1;

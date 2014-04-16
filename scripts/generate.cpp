@@ -31,11 +31,13 @@ void getPermutations(string operatorBank[], int operatorCount,
 
 int main ()
 {
-    int operatorCount = 10;
-    int permutationLength = 9;
-    string operatorBank[] = {"8 ", "3 ", "10 ", "9 ", "1 ", "0 ", "2 ", "4 ", "7 ", "11 "};
+    int operatorCount = 6;
+    int permutationLength = 6;
+    //string operatorBank[] = {"8 ", "3 ", "10 ", "9 ", "1 ", "0 ", "2 ", "4 ", "7 ", "11 "};
+    string operatorBank[] = {"1 ", "0 ", "2 ", "4 ", "7 ", "11 "};
 
-    string permutation[] = {"","","","","","","","","",""}; //empty string
+    //string permutation[] = {"","","","","","","","","",""}; //empty string
+    string permutation[] = {"","","","","", ""}; //empty string
     int curIndex = 0;
     getPermutations(operatorBank,operatorCount,permutation,
             permutationLength,curIndex);
