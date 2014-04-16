@@ -6,6 +6,8 @@
 
 using namespace std;
 
+typedef priority_queue< RECORD, vector< RECORD >, Comparator> PQUEUE;
+
 struct A{
     static std::map<int,std::string> create_map()
     {
@@ -32,6 +34,43 @@ struct A{
 };
 
 std::map<int, std::string> A::PASS_MAP =  A::create_map(); ;
+
+struct RECORD {
+    string pass_order;
+    double exec_time;
+
+    RECORD(string s, double d) :  pass_order(s), exec_time(d){}
+};
+
+class Comparator
+{
+  public:
+    bool operator()(RECORD& n1, RECORD& n2)
+    {
+      if (n1.exec_time < n2.exec_time)
+        return true;
+      else
+        return false;
+    }
+};
+
+
+struct COMMAND { 
+  string opt; 
+  string lli;
+
+  // constructor
+  COMMAND(string, long double);
+};
+
+// print operator for vector<string>
+void operator<<(ostream& os, vector<string> V) {
+  for( vector<string>::iterator it = V.begin(); it != V.end(); ++it ) {
+    os << *it << endl;
+  }
+}
+
+
 
 
 #endif
