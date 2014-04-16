@@ -112,7 +112,7 @@ inline COMMAND::COMMAND(string pass_order, long double threadId) {
   // Command to execute the file.
   //
   //    lli = string("lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
-  lli = string("/Users/ankit/DevelopmentKits/build/bin/lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
+  lli = string("lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
 }
 
 
@@ -183,8 +183,11 @@ void runOptimizationPasses() {
   std::cout << finalBmap.pq.size() << std::endl;
 
 #ifdef TIME
-  for (map<string, double>::iterator it = optExecMap.begin(); it != optExecMap.end() ; ++it) {
-    std::cout << it->first << " : " << it->second << std::endl;
+  PQUEUE pq = finalBmap.pq;
+  while(!pq.empty()) {
+    RECORD rec = pq.top();
+    pq.pop();
+    cout << rec.pass_order << ":"  <<  rec.exec_time << "\n";
   }
 #endif
 
