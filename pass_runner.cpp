@@ -1,14 +1,15 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <stdlib.h>
-#include <map>
-#include "omp.h"
-#include <time.h>
 #include <chrono>
 #include <ctime>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <queue>
 #include <ratio>
+#include <string>
+#include <stdlib.h>
+#include <time.h>
+#include "omp.h"
+#include <vector>
 
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/classification.hpp>
@@ -19,6 +20,8 @@ using namespace boost::algorithm;
 #include "pass_runner.h"
 
 #define NUM_THREADS 8 // default number of threads
+#define MAX_NUM_PER_THREAD 16
+
 #if(0)
 #ifdef DEBUG
 #ifndef TIME
@@ -49,6 +52,66 @@ string dir_name;
 })                                         \
 
 
+struct RECORD
+{
+  string pass_order;
+  double exec_time;
+
+  RECORD(string s, double d) :  pass_order(s), exec_time(d){}
+};
+
+class Comparator
+{
+  public:
+    bool operator()(RECORD& n1, RECORD& n2)
+    {
+      if (n1.exec_time < n2.exec_time)
+        return true;
+      else
+        return false;
+    }
+};
+
+typedef priority_queue< RECORD, vector< RECORD >, Comparator> PQUEUE;
+
+class BoundMap {
+  public:
+      BoundMap() { };
+
+      bool in_range(){
+        if(pq.size() < MAX_NUM_PER_THREAD) return true;
+        return false;
+      }
+
+      void insert(string s, double d){
+        if(in_range()){
+            pq.push(RECORD(s,d));
+
+        } else if(pq.top().exec_time > d) {
+            pq.pop();
+            pq.push(RECORD(s,d));
+        }
+
+#ifdef BMAP_DEBUG
+            std::cout << "Inserting new element with time "<< d << ". Size " << pq.size() << " Worst time " << pq.top().exec_time << " Sequence: " << pq.top().pass_order << std::endl;
+#endif
+
+      } /* end of function insert */
+
+      void insert(RECORD r){
+        if(in_range()){
+            pq.push(r);
+
+        } else if(pq.top().exec_time > r.exec_time) {
+            pq.pop();
+            pq.push(r);
+        }
+      }
+
+     PQUEUE pq;
+};
+
+
 struct COMMAND { 
     string opt; 
     string lli;
@@ -77,7 +140,9 @@ inline COMMAND::COMMAND(string pass_order, long double threadId) {
 
     opt = string("opt ") + pname + " ./"  + binaryName + " -o "+ temp_name  + "" + to_string(threadId) + " >> /dev/null";
     // Command to execute the file.
-    lli = string("lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
+    //
+//    lli = string("lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
+    lli = string("/Users/ankit/DevelopmentKits/build/bin/lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
 }
 
 
@@ -103,13 +168,22 @@ void cleanUpTheMess() {
 }
 
 void runOptimizationPasses() {
-    map<string, double> optExecMap;
+    //map<string, double> optExecMap;
+    
+
+    map<long double, BoundMap> boundMaps;
+    BoundMap bmap;
     clock_t t1,t2;
     float diff;
     long double tid;
-#pragma omp parallel for private(t1, t2, diff, tid)
+
+    
+
+#pragma omp parallel for private(t1, t2, diff, tid, bmap)
     for( int i = 0; i < passOrder.size() ; ++i ) {
         tid = omp_get_thread_num();
+        clock_t t1,t2;
+
 
         // Run the passes with order from file.
         COMMAND Cmd(passOrder[i], tid);
@@ -118,15 +192,37 @@ void runOptimizationPasses() {
         cout << "Running Command: " << Cmd.opt << "\n" << Cmd.lli  << " in thread number " << tid << endl;
 #endif
 
-        _SYSTEM_CALL( Cmd.opt );
+//        _SYSTEM_CALL( Cmd.opt );
 
         double start = omp_get_wtime( );
-        _SYSTEM_CALL( Cmd.lli );
+
+t1 = clock();
+        _SYSTEM_CALL( (Cmd.opt + " && " +Cmd.lli) );
+
+     t2 = clock();
+     double diff = (double)t2 - (double)t1;
+
         double end = omp_get_wtime( );
 
-//        optExecMap.insert( pair<string, double>(passOrder[i], (end-start) ) );
+        bmap.insert( passOrder[i], (end-start) );
+        boundMaps[tid] = bmap;
+        //optExecMap.insert( pair<string, double>(passOrder[i], (32.4) ) );
     }
 
+    // Merge data from all threads
+    BoundMap finalBmap;
+
+    for (map<long double, BoundMap>::iterator it = boundMaps.begin(); it != boundMaps.end(); ++it) {
+        BoundMap BM = it->second;
+        PQUEUE pq = BM.pq;
+        while(!pq.empty()){
+            RECORD rec = pq.top();
+            pq.pop();
+            finalBmap.insert(rec);
+        }
+    }
+
+    std::cout << finalBmap.pq.size() << std::endl;
 
 #ifdef TIME
     for (map<string, double>::iterator it = optExecMap.begin(); it != optExecMap.end() ; ++it) {
