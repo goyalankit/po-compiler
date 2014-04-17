@@ -20,7 +20,7 @@ using namespace boost::algorithm;
 #include "pass_runner.h"
 
 #define NUM_THREADS 8 // default number of threads
-#define MAX_NUM_PER_THREAD 16
+#define MAX_NUM_PER_THREAD 100
 
 #if(0)
 #ifdef DEBUG

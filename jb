@@ -6,10 +6,10 @@
 #SBATCH -J pass_runner       # Job name
 #SBATCH -o pass_runner-de.o%j   # Name of stdout output file(%j expands to jobId)
 #SBATCH -e pass_runner-de.err.o%j   # Name of stderr output file(%j expands to jobId)
-#SBATCH -p normal           # Submit to the 'normal' or 'development' queue
+#SBATCH -p development           # Submit to the 'normal' or 'development' queue
 #SBATCH -N 16                # Total number of nodes requested (20 cores/node)
 #SBATCH -n 16                # Total number of mpi tasks requested
-#SBATCH -t 08:00:00         # Run time (hh:mm:ss) - 1.5 hours
+#SBATCH -t 02:00:00         # Run time (hh:mm:ss) - 1.5 hours
 ## The next line is required if the user has more than one project
 #SBATCH -A Galois  # Allocation name to charge job against
  
@@ -18,5 +18,8 @@ module load llvm
  
 # Set the number of threads per task(Default=1)
 export OMP_NUM_THREADS=16
-./ev2 de.o events.test "de_data.dat events.testdir/dataout" 16
+./ev2 de.o xaa "de_data.dat xaadir/dataout" 24 > xa_output
+./ev2 de.o xab "de_data.dat xabdir/dataout" 24 > xb_output
+./ev2 de.o xac "de_data.dat xacdir/dataout" 24 > xc_output
+./ev2 de.o xad "de_data.dat xaddir/dataout" 24 > xd_output
 echo "------------";
