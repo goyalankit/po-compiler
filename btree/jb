@@ -1,0 +1,29 @@
+#!/bin/bash
+#----------------------------------------------------
+# Example SLURM job script to run OpenMP applications
+# on TACC's Stampede system.
+#----------------------------------------------------
+#SBATCH -J pass_runner       # Job name
+#SBATCH -o pass_runner-de.o%j   # Name of stdout output file(%j expands to jobId)
+#SBATCH -e pass_runner-de.err.o%j   # Name of stderr output file(%j expands to jobId)
+#SBATCH -p development           # Submit to the 'normal' or 'development' queue
+#SBATCH -N 1                # Total number of nodes requested (20 cores/node)
+#SBATCH -n 16                # Total number of mpi tasks requested
+#SBATCH -t 02:00:00         # Run time (hh:mm:ss) - 1.5 hours
+## The next line is required if the user has more than one project
+#SBATCH -A Galois  # Allocation name to charge job against
+ 
+
+module load llvm
+ 
+# Set the number of threads per task(Default=1)
+export OMP_NUM_THREADS=16
+./ev2 binarytrees.o xaa "10 xaadir/daou" 24 &> ouput_a
+
+./ev2 binarytrees.o xab "10 xabdir/daou" 24 &> ouput_b
+
+./ev2 binarytrees.o xac "10 xacdir/daou" 24 &> ouput_c
+
+./ev2 binarytrees.o xad "10 xaddir/daou" 24 &> ouput_d
+
+

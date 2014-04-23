@@ -1,0 +1,7 @@
+#!/bin/bash
+
+send(){
+    curl -X GET "http://message.ankitgoyal.me/send?message=$1"
+}
+
+[ "$1" != "" ] && value="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$1")" && send $value

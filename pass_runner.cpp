@@ -188,7 +188,7 @@ void runOptimizationPasses() {
   while(!pq.empty()) {
     RECORD rec = pq.top();
     pq.pop();
-    cout << rec.pass_order << ":"  <<  rec.exec_time << "\n";
+    cerr << rec.pass_order << ":"  <<  rec.exec_time << "\n";
   }
 #endif
 

@@ -1,0 +1,1 @@
+/tmp/slurmd/job3181661/slurm_script: line 21: 30367 Segmentation fault      ./ev2 binarytrees.o xaa "10 xaa/daou" 24 &>ouput_a

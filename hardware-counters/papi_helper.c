@@ -135,7 +135,7 @@ void stopPapiCounters(){
 #ifdef DBG
         printf("%20lld %-15s %s\n", _G_COUNTERS[i], info.symbol, info.long_descr);
 #else
-        printf("%lld ", _G_COUNTERS[i]);
+        fprintf(stderr, "%lld ", _G_COUNTERS[i]);
 #endif
     }
 }

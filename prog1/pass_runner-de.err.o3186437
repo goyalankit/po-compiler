@@ -1,0 +1,10 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0    15    0    15    0     0     57      0 --:--:-- --:--:-- --:--:--   100
+/tmp/slurmd/job3186437/slurm_script: line 30: 83897 Segmentation fault      (core dumped) ./ev2 prog2.o xaa " xaadir/test" 24 2> ../prog2/xaa_output > /dev/null
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0    15    0    15    0     0     74      0 --:--:-- --:--:-- --:--:--    97
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0    15    0    15    0     0     77      0 --:--:-- --:--:-- --:--:--    89  0    15    0    15    0     0     76      0 --:--:-- --:--:-- --:--:--    88
