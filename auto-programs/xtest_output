@@ -1,0 +1,6 @@
+opt: ./prog1.o: error: Could not open input file: No such file or directory
+8 3 10 9 1 0 4 2 7:0.688822
+8 3 10 9 1 0 2 4 7:0.68875
+8 3 10 9 1 0 2 7 4:0.677322
+8 3 10 9 1 0 7 2 4:0.676841
+8 3 10 9 1 0 4 7 2:0.676528
