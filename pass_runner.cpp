@@ -165,6 +165,11 @@ void runOptimizationPasses() {
 
     bmap.insert( passOrder[i], (end-start) );
     boundMaps[tid] = bmap;
+
+	
+    if(passOrder[i] == "8 3 10 9 1 0 2 4 7")
+	cerr << "default " << passOrder[i]  << ":" <<  (end-start) << "\n";
+
     //optExecMap.insert( pair<string, double>(passOrder[i], (32.4) ) );
   }
 
