@@ -26,19 +26,21 @@ export OMP_NUM_THREADS=16
 #./ev2 prog1.o xad " xaddir/test" 16 2> xad_output 1>/dev/null
 
 
+## 5 taking lot of time
+
+
 send "got the queue."
-./ev2 prog7.o xaa " xaadir/test" 24 2> prog7_xaa_output 1>/dev/null
-./ev2 prog7.o xab " xabdir/test" 24 2> prog7_xab_output 1>/dev/null
-./ev2 prog7.o xac " xacdir/test" 24 2> prog7_xac_output 1>/dev/null
-./ev2 prog7.o xad " xaddir/test" 24 2> prog7_xad_output 1>/dev/null
+send "Running for second job"
+./ev2 prog7.o xaa " xaadir/test" 16 2> prog7_xaa_output 1>/dev/null
+./ev2 prog7.o xab " xabdir/test" 16 2> prog7_xab_output 1>/dev/null
+./ev2 prog7.o xac " xacdir/test" 16 2> prog7_xac_output 1>/dev/null
+./ev2 prog7.o xad " xaddir/test" 16 2> prog7_xad_output 1>/dev/null
 send "Ran for unexpected jobs"
 
-send "Running for second job"
-./ev2 prog8.o xaa " xaadir/test" 24 2> prog8_xaa_output 1>/dev/null
-./ev2 prog8.o xab " xabdir/test" 24 2> prog8_xab_output 1>/dev/null
-./ev2 prog8.o xac " xacdir/test" 24 2> prog8_xac_output 1>/dev/null
-./ev2 prog8.o xad " xaddir/test" 24 2> prog8_xad_output 1>/dev/null
-send "Ran for unexpected jobs"
+./ev2 prog8.o xaa " xaadir/test" 16 2> prog8_xaa_output 1>/dev/null
+./ev2 prog8.o xab " xabdir/test" 16 2> prog8_xab_output 1>/dev/null
+./ev2 prog8.o xac " xacdir/test" 16 2> prog8_xac_output 1>/dev/null
+./ev2 prog8.o xad " xaddir/test" 16 2> prog8_xad_output 1>/dev/null
 
 
 

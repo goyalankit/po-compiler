@@ -1,0 +1,7 @@
+
+cat prog$1_xaa_output > prog$1_final_output
+cat prog$1_xab_output >> prog$1_final_output
+cat prog$1_xac_output >> prog$1_final_output
+cat prog$1_xad_output >> prog$1_final_output
+
+sort -t":" -k2n prog$1_final_output > sorted_prog$1_output_final
