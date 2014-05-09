@@ -1,0 +1,6 @@
+#!/bin/bash
+
+clang -O0 -I ~/csmith-2.0.0/runtime/ -emit-llvm -c $1.c
+opt -stats -load ./ModuleInfo.so -module-info $1.bc -o $1-out.bc &> $1.temp
+
+cat tet  | grep "STAT" |  awk 'BEGIN { ORS = " " } { print$1 }' > $1.results

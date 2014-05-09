@@ -36,16 +36,16 @@
 using namespace llvm;
 using namespace std;
 
-STATISTIC(LoopInstNum, "Counts number of instructions in a loop");
-STATISTIC(LoopNum, "Counts number of loops");
-STATISTIC(LoopBasicBlocksNum, "Counts number of basic blocks in a loop");
-STATISTIC(LoopDepth, "sum of all depths of loop. divide by loop num to get average depth");
-STATISTIC(LoopBranchInstNum, "Counts number of branch instructions in a loop");
-STATISTIC(LoopLoadInst, "Counts number of load instructions in a loop");
-STATISTIC(LoopStoreInst, "Counts number of store instructions in a loop");
-STATISTIC(LoopNumOperands, "Counts number of operands in a loop");
-STATISTIC(LoopNumMemInst, "Counts number of memory instructions in a loop");
-STATISTIC(NumOperations, "Counts number of operations in a loop");
+STATISTIC(LoopInstNum, "STAT: Counts number of instructions in a loop");
+STATISTIC(LoopNum, "STAT: Counts number of loops");
+STATISTIC(LoopBasicBlocksNum, "STAT: Counts number of basic blocks in a loop");
+STATISTIC(LoopDepth, "STAT: sum of all depths of loop. divide by loop num to get average depth");
+STATISTIC(LoopBranchInstNum, "STAT: Counts number of branch instructions in a loop");
+STATISTIC(LoopLoadInst, "STAT: Counts number of load instructions in a loop");
+STATISTIC(LoopStoreInst, "STAT: Counts number of store instructions in a loop");
+STATISTIC(LoopNumOperands, "STAT: Counts number of operands in a loop");
+STATISTIC(LoopNumMemInst, "STAT: Counts number of memory instructions in a loop");
+STATISTIC(NumOperations, "STAT: Counts number of operations in a loop");
 
 namespace 
 {
@@ -151,7 +151,7 @@ namespace
 
             LoopDepth += L->getLoopDepth();
 
-            errs() << "Num of instructions " << numOfInstr << " num of blocks " << numOfBB << " loop depth" << F->loopDepth <<" \n";
+            //errs() << "Num of instructions " << numOfInstr << " num of blocks " << numOfBB << " loop depth" << F->loopDepth <<" \n";
 
             return false;
         }
