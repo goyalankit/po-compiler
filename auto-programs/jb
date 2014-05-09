@@ -6,10 +6,10 @@
 #SBATCH -J pass_runner       # Job name
 #SBATCH -o pass_runner-de.o%j   # Name of stdout output file(%j expands to jobId)
 #SBATCH -e pass_runner-de.err.o%j   # Name of stderr output file(%j expands to jobId)
-#SBATCH -p development           # Submit to the 'normal' or 'development' queue
+#SBATCH -p normal           # Submit to the 'normal' or 'development' queue
 #SBATCH -N 1                # Total number of nodes requested (20 cores/node)
 #SBATCH -n 16                # Total number of mpi tasks requested
-#SBATCH -t 02:00:00         # Run time (hh:mm:ss) - 1.7 hours
+#SBATCH -t 48:00:00         # Run time (hh:mm:ss) - 1.7 hours
 ## The next line is required if the user has more than one project
 #SBATCH -A Galois  # Allocation name to charge job against
  
@@ -29,18 +29,31 @@ export OMP_NUM_THREADS=16
 ## 5 taking lot of time
 
 
-send "got the queue."
-send "Running for second job"
-./ev2 prog7.o xaa " xaadir/test" 16 2> prog7_xaa_output 1>/dev/null
-./ev2 prog7.o xab " xabdir/test" 16 2> prog7_xab_output 1>/dev/null
-./ev2 prog7.o xac " xacdir/test" 16 2> prog7_xac_output 1>/dev/null
-./ev2 prog7.o xad " xaddir/test" 16 2> prog7_xad_output 1>/dev/null
-send "Ran for unexpected jobs"
+send "got the NORMAL queue"
+./ev2 prog9.o xaa " xaadir/test" 16 2> prog9_xaa_output 1>/dev/null
+./ev2 prog9.o xab " xabdir/test" 16 2> prog9_xab_output 1>/dev/null
+./ev2 prog9.o xac " xacdir/test" 16 2> prog9_xac_output 1>/dev/null
+./ev2 prog9.o xad " xaddir/test" 16 2> prog9_xad_output 1>/dev/null
+send "RAN 1 GIANT JOB"
 
 ./ev2 prog8.o xaa " xaadir/test" 16 2> prog8_xaa_output 1>/dev/null
 ./ev2 prog8.o xab " xabdir/test" 16 2> prog8_xab_output 1>/dev/null
 ./ev2 prog8.o xac " xacdir/test" 16 2> prog8_xac_output 1>/dev/null
 ./ev2 prog8.o xad " xaddir/test" 16 2> prog8_xad_output 1>/dev/null
+send "RAN 2 GIANT JOB"
+
+./ev2 prog19.o xaa " xaadir/test" 16 2> prog19_xaa_output 1>/dev/null
+./ev2 prog19.o xab " xabdir/test" 16 2> prog19_xab_output 1>/dev/null
+./ev2 prog19.o xac " xacdir/test" 16 2> prog19_xac_output 1>/dev/null
+./ev2 prog19.o xad " xaddir/test" 16 2> prog19_xad_output 1>/dev/null
+
+send "RAN 3 GIANT JOB"
+
+./ev2 prog20.o xaa " xaadir/test" 16 2> prog20_xaa_output 1>/dev/null
+./ev2 prog20.o xab " xabdir/test" 16 2> prog20_xab_output 1>/dev/null
+./ev2 prog20.o xac " xacdir/test" 16 2> prog20_xac_output 1>/dev/null
+./ev2 prog20.o xad " xaddir/test" 16 2> prog20_xad_output 1>/dev/null
+
 
 
 

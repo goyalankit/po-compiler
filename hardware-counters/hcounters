@@ -14,7 +14,9 @@ run() {
     init
 
     # compile the code once.
-    clang -g -O0 -w -I/opt/apps/papi/5.3.0/include -Wl,-rpath,$TACC_PAPI_LIB -L$TACC_PAPI_LIB -lpapi papi_helper.c $1 -o a.out."$$" -I/scratch/02681/natviv/workspace/benchmark-search/C/csmith/runtime/
+    clang -g -O0 -w -I/opt/apps/papi/5.3.0/include -Wl,-rpath,$TACC_PAPI_LIB -L$TACC_PAPI_LIB \
+	-lpapi /scratch/02681/natviv/workspace/po-compiler/hardware-counters/papi_helper.c $1 -o a.out."$$" \
+		-I/scratch/02681/natviv/workspace/benchmark-search/C/csmith/runtime/
     
     # TODO: Apply optimization passes using opt.
 
