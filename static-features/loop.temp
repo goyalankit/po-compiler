@@ -1,0 +1,15 @@
+===-------------------------------------------------------------------------===
+                          ... Statistics Collected ...
+===-------------------------------------------------------------------------===
+
+11  - STAT: Counts number of basic blocks in a loop
+11  - STAT: Counts number of branch instructions in a loop
+34  - STAT: Counts number of instructions in a loop
+10  - STAT: Counts number of load instructions in a loop
+ 2  - STAT: Counts number of loops
+14  - STAT: Counts number of memory instructions in a loop
+55  - STAT: Counts number of operands in a loop
+38  - STAT: Counts number of operations in a loop
+ 4  - STAT: Counts number of store instructions in a loop
+ 3  - STAT: sum of all depths of loop. divide by loop num to get average depth
+
