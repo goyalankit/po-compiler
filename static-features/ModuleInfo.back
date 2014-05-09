@@ -1,0 +1,95 @@
+// 15-745 S13 Assignment 1: FunctionInfo.cpp
+// 
+// Based on code from Todd C. Mowry
+// Modified by Arthur Peters
+// Modified by Ankit Goyal
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "llvm/Pass.h"
+#include "llvm/PassManager.h"
+#include "llvm/Transforms/IPO/PassManagerBuilder.h"
+#include "llvm/IR/Function.h"
+#include "llvm/IR/Module.h"
+#include "llvm/Support/raw_ostream.h"
+#include "llvm/Support/InstIterator.h"
+#include "llvm/IR/Instruction.h"
+#include "llvm/DebugInfo.h"
+#include "llvm/Assembly/AssemblyAnnotationWriter.h"
+#include "llvm/Support/FormattedStream.h"
+#include "llvm/IR/Constants.h"
+#include "llvm/Analysis/LoopPass.h"
+#include "llvm/Analysis/LoopInfo.h"
+#include "llvm/Analysis/LoopIterator.h"
+
+
+#include <ostream>
+#include <fstream>
+#include <iostream>
+#include <stdlib.h>
+
+using namespace llvm;
+
+namespace {
+/*
+    struct LoopFeatures {
+        int numberOfBasicBlocks;
+        int numberOfInstructions;
+    };
+*/
+
+    class LoopInfo : public LoopPass {
+        public:
+            static char ID;
+            LoopInfo() : LoopPass(ID) {}
+            //LoopInfo *LI;
+            //std::vector<LoopFeatures*> loopInfos;
+
+            virtual bool runOnLoop(Loop *L, LPPassManager &LPM) {
+                //LoopFeatures *LF = new LoopFeatures();
+                //M.print(errs(), &aaw);	
+                //LI = &getAnalysis<LoopInfo>();
+                int numBasicBlocks = 0; int instrCount = 0;
+                /*
+                for (Loop::block_iterator Iter = L->block_begin(), End = L->block_end(); Iter != End; ++Iter) {
+                    ++numBasicBlocks;
+                    instrCount += (*Iter)->size();
+                }
+
+                LF->numberOfBasicBlocks = numBasicBlocks;
+                LF->numberOfInstructions = instrCount;
+                
+                errs() << numBasicBlocks << " " << instrCount << " \n";
+                */
+                return false;
+            }
+
+            // We don't modify the program, so we preserve all analyses
+            virtual void getAnalysisUsage(AnalysisUsage &AU) const {
+                AU.setPreservesAll();
+                AU.addRequired<LoopInfo>();
+            }
+    };
+
+    // LLVM uses the address of this static member to identify the pass, so the
+    // initialization value is unimportant.
+    char LoopInfo::ID = 0;
+
+    // Register this pass to be used by language front ends.
+    // This allows this pass to be called using the command:
+    //    clang -c -Xclang -load -Xclang ./FunctionInfo.so loop.c
+    static void registerMyPass(const PassManagerBuilder &,
+            PassManagerBase &PM) {
+        PM.add(new LoopInfo());
+    }
+    RegisterStandardPasses
+        RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible,
+                registerMyPass);
+
+    // Register the pass name to allow it to be called with opt:
+    //    clang -c -g -emit-llvm loop.c
+    //    opt -load ./LoopInfo.so -module-info loop.bc > /dev/null
+    // See http://llvm.org/releases/3.4/docs/WritingAnLLVMPass.html#running-a-pass-with-opt for more info.
+    RegisterPass<LoopInfo> X("module-info", "module Information");
+
+}
