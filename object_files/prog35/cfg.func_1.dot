@@ -1,0 +1,41 @@
+digraph "CFG for 'func_1' function" {
+	label="CFG for 'func_1' function";
+
+	Node0xb7f8b00 [shape=record,label="{entry:\l  %l_15 = alloca [2 x i8*], align 16\l  %l_31 = alloca i32, align 4\l  %l_32 = alloca i32, align 4\l  %l_33 = alloca i32, align 4\l  %l_3105 = alloca i32*, align 8\l  %l_3277 = alloca i32**, align 8\l  %l_3276 = alloca i32***, align 8\l  %l_3280 = alloca i32****, align 8\l  %l_3284 = alloca [2 x [1 x i32]], align 4\l  %l_3292 = alloca [10 x [3 x [8 x i32]]], align 16\l  %l_3331 = alloca i64, align 8\l  %l_3346 = alloca i64, align 8\l  %l_3383 = alloca i64, align 8\l  %l_3399 = alloca [1 x i32], align 4\l  %l_3468 = alloca i8****, align 8\l  %l_3484 = alloca i8, align 1\l  %l_3540 = alloca i16, align 2\l  %i = alloca i32, align 4\l  %j = alloca i32, align 4\l  %k = alloca i32, align 4\l  store i32 0, i32* %l_31, align 4\l  store i32 432295246, i32* %l_32, align 4\l  store i32 8, i32* %l_33, align 4\l  store i32* @g_2278, i32** %l_3105, align 8\l  store i32** @g_1687, i32*** %l_3277, align 8\l  store i32*** %l_3277, i32**** %l_3276, align 8\l  store i32**** @g_3278, i32***** %l_3280, align 8\l  %0 = bitcast [10 x [3 x [8 x i32]]]* %l_3292 to i8*\l  call void @llvm.memcpy.p0i8.p0i8.i64(i8* %0, i8* bitcast ([10 x [3 x [8 x\l... i32]]]* @func_1.l_3292 to i8*), i64 960, i32 16, i1 false)\l  store i64 1, i64* %l_3331, align 8\l  store i64 -8654196130707582378, i64* %l_3346, align 8\l  store i64 6190343614545973688, i64* %l_3383, align 8\l  store i8**** null, i8***** %l_3468, align 8\l  store i8 6, i8* %l_3484, align 1\l  store i16 -1, i16* %l_3540, align 2\l  store i32 0, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0xb7f8b00 -> Node0xb7f8b30;
+	Node0xb7f8b30 [shape=record,label="{for.cond:                                         \l  %1 = load i32* %i, align 4\l  %cmp = icmp slt i32 %1, 2\l  br i1 %cmp, label %for.body, label %for.end\l|{<s0>T|<s1>F}}"];
+	Node0xb7f8b30:s0 -> Node0xb7f8e00;
+	Node0xb7f8b30:s1 -> Node0xb7f8e60;
+	Node0xb7f8e00 [shape=record,label="{for.body:                                         \l  %2 = load i32* %i, align 4\l  %idxprom = sext i32 %2 to i64\l  %arrayidx = getelementptr inbounds [2 x i8*]* %l_15, i32 0, i64 %idxprom\l  store i8* @g_16, i8** %arrayidx, align 8\l  br label %for.inc\l}"];
+	Node0xb7f8e00 -> Node0xb7f8e30;
+	Node0xb7f8e30 [shape=record,label="{for.inc:                                          \l  %3 = load i32* %i, align 4\l  %inc = add nsw i32 %3, 1\l  store i32 %inc, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0xb7f8e30 -> Node0xb7f8b30;
+	Node0xb7f8e60 [shape=record,label="{for.end:                                          \l  store i32 0, i32* %i, align 4\l  br label %for.cond1\l}"];
+	Node0xb7f8e60 -> Node0xb7f8e90;
+	Node0xb7f8e90 [shape=record,label="{for.cond1:                                        \l  %4 = load i32* %i, align 4\l  %cmp2 = icmp slt i32 %4, 2\l  br i1 %cmp2, label %for.body3, label %for.end16\l|{<s0>T|<s1>F}}"];
+	Node0xb7f8e90:s0 -> Node0xb7f8ec0;
+	Node0xb7f8e90:s1 -> Node0xb7f8fe0;
+	Node0xb7f8ec0 [shape=record,label="{for.body3:                                        \l  store i32 0, i32* %j, align 4\l  br label %for.cond4\l}"];
+	Node0xb7f8ec0 -> Node0xb7f8ef0;
+	Node0xb7f8ef0 [shape=record,label="{for.cond4:                                        \l  %5 = load i32* %j, align 4\l  %cmp5 = icmp slt i32 %5, 1\l  br i1 %cmp5, label %for.body6, label %for.end13\l|{<s0>T|<s1>F}}"];
+	Node0xb7f8ef0:s0 -> Node0xb7f8f20;
+	Node0xb7f8ef0:s1 -> Node0xb7f8f80;
+	Node0xb7f8f20 [shape=record,label="{for.body6:                                        \l  %6 = load i32* %j, align 4\l  %idxprom7 = sext i32 %6 to i64\l  %7 = load i32* %i, align 4\l  %idxprom8 = sext i32 %7 to i64\l  %arrayidx9 = getelementptr inbounds [2 x [1 x i32]]* %l_3284, i32 0, i64\l... %idxprom8\l  %arrayidx10 = getelementptr inbounds [1 x i32]* %arrayidx9, i32 0, i64\l... %idxprom7\l  store i32 6, i32* %arrayidx10, align 4\l  br label %for.inc11\l}"];
+	Node0xb7f8f20 -> Node0xb7f8f50;
+	Node0xb7f8f50 [shape=record,label="{for.inc11:                                        \l  %8 = load i32* %j, align 4\l  %inc12 = add nsw i32 %8, 1\l  store i32 %inc12, i32* %j, align 4\l  br label %for.cond4\l}"];
+	Node0xb7f8f50 -> Node0xb7f8ef0;
+	Node0xb7f8f80 [shape=record,label="{for.end13:                                        \l  br label %for.inc14\l}"];
+	Node0xb7f8f80 -> Node0xb7f8fb0;
+	Node0xb7f8fb0 [shape=record,label="{for.inc14:                                        \l  %9 = load i32* %i, align 4\l  %inc15 = add nsw i32 %9, 1\l  store i32 %inc15, i32* %i, align 4\l  br label %for.cond1\l}"];
+	Node0xb7f8fb0 -> Node0xb7f8e90;
+	Node0xb7f8fe0 [shape=record,label="{for.end16:                                        \l  store i32 0, i32* %i, align 4\l  br label %for.cond17\l}"];
+	Node0xb7f8fe0 -> Node0xb7f9010;
+	Node0xb7f9010 [shape=record,label="{for.cond17:                                       \l  %10 = load i32* %i, align 4\l  %cmp18 = icmp slt i32 %10, 1\l  br i1 %cmp18, label %for.body19, label %for.end24\l|{<s0>T|<s1>F}}"];
+	Node0xb7f9010:s0 -> Node0xb7f9040;
+	Node0xb7f9010:s1 -> Node0xb7f90a0;
+	Node0xb7f9040 [shape=record,label="{for.body19:                                       \l  %11 = load i32* %i, align 4\l  %idxprom20 = sext i32 %11 to i64\l  %arrayidx21 = getelementptr inbounds [1 x i32]* %l_3399, i32 0, i64\l... %idxprom20\l  store i32 6, i32* %arrayidx21, align 4\l  br label %for.inc22\l}"];
+	Node0xb7f9040 -> Node0xb7f9070;
+	Node0xb7f9070 [shape=record,label="{for.inc22:                                        \l  %12 = load i32* %i, align 4\l  %inc23 = add nsw i32 %12, 1\l  store i32 %inc23, i32* %i, align 4\l  br label %for.cond17\l}"];
+	Node0xb7f9070 -> Node0xb7f9010;
+	Node0xb7f90a0 [shape=record,label="{for.end24:                                        \l  %13 = load i32** %l_3105, align 8\l  %14 = load i32* %13, align 4\l  %conv = sext i32 %14 to i64\l  ret i64 %conv\l}"];
+}

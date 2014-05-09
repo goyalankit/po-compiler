@@ -1,0 +1,5 @@
+digraph "CFG for 'safe_mul_func_uint8_t_u_u' function" {
+	label="CFG for 'safe_mul_func_uint8_t_u_u' function";
+
+	Node0xaade478 [shape=record,label="{entry:\l  %ui1.addr = alloca i8, align 1\l  %ui2.addr = alloca i8, align 1\l  store i8 %ui1, i8* %ui1.addr, align 1\l  store i8 %ui2, i8* %ui2.addr, align 1\l  %0 = load i8* %ui1.addr, align 1\l  %conv = zext i8 %0 to i32\l  %1 = load i8* %ui2.addr, align 1\l  %conv1 = zext i8 %1 to i32\l  %mul = mul i32 %conv, %conv1\l  %conv2 = trunc i32 %mul to i8\l  ret i8 %conv2\l}"];
+}

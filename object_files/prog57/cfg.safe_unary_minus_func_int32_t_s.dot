@@ -1,0 +1,12 @@
+digraph "CFG for 'safe_unary_minus_func_int32_t_s' function" {
+	label="CFG for 'safe_unary_minus_func_int32_t_s' function";
+
+	Node0xa672090 [shape=record,label="{entry:\l  %si.addr = alloca i32, align 4\l  store i32 %si, i32* %si.addr, align 4\l  %0 = load i32* %si.addr, align 4\l  %cmp = icmp eq i32 %0, -2147483648\l  br i1 %cmp, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa672090:s0 -> Node0xa6720c0;
+	Node0xa672090:s1 -> Node0xa6720f0;
+	Node0xa6720c0 [shape=record,label="{cond.true:                                        \l  %1 = load i32* %si.addr, align 4\l  br label %cond.end\l}"];
+	Node0xa6720c0 -> Node0xa672120;
+	Node0xa6720f0 [shape=record,label="{cond.false:                                       \l  %2 = load i32* %si.addr, align 4\l  %sub = sub nsw i32 0, %2\l  br label %cond.end\l}"];
+	Node0xa6720f0 -> Node0xa672120;
+	Node0xa672120 [shape=record,label="{cond.end:                                         \l  %cond = phi i32 [ %1, %cond.true ], [ %sub, %cond.false ]\l  ret i32 %cond\l}"];
+}

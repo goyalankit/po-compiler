@@ -1,0 +1,12 @@
+digraph "CFG for 'safe_sub_func_int32_t_s_s' function" {
+	label="CFG for 'safe_sub_func_int32_t_s_s' function";
+
+	Node0xb75b550 [shape=record,label="{entry:\l  %si1.addr = alloca i32, align 4\l  %si2.addr = alloca i32, align 4\l  store i32 %si1, i32* %si1.addr, align 4\l  store i32 %si2, i32* %si2.addr, align 4\l  %0 = load i32* %si1.addr, align 4\l  %1 = load i32* %si2.addr, align 4\l  %xor = xor i32 %0, %1\l  %2 = load i32* %si1.addr, align 4\l  %3 = load i32* %si1.addr, align 4\l  %4 = load i32* %si2.addr, align 4\l  %xor1 = xor i32 %3, %4\l  %and = and i32 %xor1, -2147483648\l  %xor2 = xor i32 %2, %and\l  %5 = load i32* %si2.addr, align 4\l  %sub = sub nsw i32 %xor2, %5\l  %6 = load i32* %si2.addr, align 4\l  %xor3 = xor i32 %sub, %6\l  %and4 = and i32 %xor, %xor3\l  %cmp = icmp slt i32 %and4, 0\l  br i1 %cmp, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xb75b550:s0 -> Node0xb75b580;
+	Node0xb75b550:s1 -> Node0xb75b5b0;
+	Node0xb75b580 [shape=record,label="{cond.true:                                        \l  %7 = load i32* %si1.addr, align 4\l  br label %cond.end\l}"];
+	Node0xb75b580 -> Node0xb75b5e0;
+	Node0xb75b5b0 [shape=record,label="{cond.false:                                       \l  %8 = load i32* %si1.addr, align 4\l  %9 = load i32* %si2.addr, align 4\l  %sub5 = sub nsw i32 %8, %9\l  br label %cond.end\l}"];
+	Node0xb75b5b0 -> Node0xb75b5e0;
+	Node0xb75b5e0 [shape=record,label="{cond.end:                                         \l  %cond = phi i32 [ %7, %cond.true ], [ %sub5, %cond.false ]\l  ret i32 %cond\l}"];
+}

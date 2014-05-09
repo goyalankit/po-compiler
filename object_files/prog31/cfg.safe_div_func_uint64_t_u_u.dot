@@ -1,0 +1,12 @@
+digraph "CFG for 'safe_div_func_uint64_t_u_u' function" {
+	label="CFG for 'safe_div_func_uint64_t_u_u' function";
+
+	Node0xb7779f0 [shape=record,label="{entry:\l  %ui1.addr = alloca i64, align 8\l  %ui2.addr = alloca i64, align 8\l  store i64 %ui1, i64* %ui1.addr, align 8\l  store i64 %ui2, i64* %ui2.addr, align 8\l  %0 = load i64* %ui2.addr, align 8\l  %cmp = icmp eq i64 %0, 0\l  br i1 %cmp, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xb7779f0:s0 -> Node0xb777a20;
+	Node0xb7779f0:s1 -> Node0xb777a50;
+	Node0xb777a20 [shape=record,label="{cond.true:                                        \l  %1 = load i64* %ui1.addr, align 8\l  br label %cond.end\l}"];
+	Node0xb777a20 -> Node0xb777a80;
+	Node0xb777a50 [shape=record,label="{cond.false:                                       \l  %2 = load i64* %ui1.addr, align 8\l  %3 = load i64* %ui2.addr, align 8\l  %div = udiv i64 %2, %3\l  br label %cond.end\l}"];
+	Node0xb777a50 -> Node0xb777a80;
+	Node0xb777a80 [shape=record,label="{cond.end:                                         \l  %cond = phi i64 [ %1, %cond.true ], [ %div, %cond.false ]\l  ret i64 %cond\l}"];
+}

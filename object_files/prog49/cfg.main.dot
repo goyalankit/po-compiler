@@ -1,0 +1,27 @@
+digraph "CFG for 'main' function" {
+	label="CFG for 'main' function";
+
+	Node0xaba7150 [shape=record,label="{entry:\l  %retval = alloca i32, align 4\l  %argc.addr = alloca i32, align 4\l  %argv.addr = alloca i8**, align 8\l  %i = alloca i32, align 4\l  %print_hash_value = alloca i32, align 4\l  store i32 0, i32* %retval\l  store i32 %argc, i32* %argc.addr, align 4\l  store i8** %argv, i8*** %argv.addr, align 8\l  store i32 0, i32* %print_hash_value, align 4\l  %0 = load i32* %argc.addr, align 4\l  %cmp = icmp eq i32 %0, 2\l  br i1 %cmp, label %land.lhs.true, label %if.end\l|{<s0>T|<s1>F}}"];
+	Node0xaba7150:s0 -> Node0xaba7180;
+	Node0xaba7150:s1 -> Node0xaba71e0;
+	Node0xaba7180 [shape=record,label="{land.lhs.true:                                    \l  %1 = load i8*** %argv.addr, align 8\l  %arrayidx = getelementptr inbounds i8** %1, i64 1\l  %2 = load i8** %arrayidx, align 8\l  %call = call i32 @strcmp(i8* %2, i8* getelementptr inbounds ([2 x i8]*\l... @.str, i32 0, i32 0)) #3\l  %cmp1 = icmp eq i32 %call, 0\l  br i1 %cmp1, label %if.then, label %if.end\l|{<s0>T|<s1>F}}"];
+	Node0xaba7180:s0 -> Node0xaba71b0;
+	Node0xaba7180:s1 -> Node0xaba71e0;
+	Node0xaba71b0 [shape=record,label="{if.then:                                          \l  store i32 1, i32* %print_hash_value, align 4\l  br label %if.end\l}"];
+	Node0xaba71b0 -> Node0xaba71e0;
+	Node0xaba71e0 [shape=record,label="{if.end:                                           \l  call void @platform_main_begin()\l  call void @crc32_gentab()\l  %call2 = call i32 @func_1()\l  store i32 0, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0xaba71e0 -> Node0xaba7210;
+	Node0xaba7210 [shape=record,label="{for.cond:                                         \l  %3 = load i32* %i, align 4\l  %cmp3 = icmp slt i32 %3, 5\l  br i1 %cmp3, label %for.body, label %for.end\l|{<s0>T|<s1>F}}"];
+	Node0xaba7210:s0 -> Node0xaba7240;
+	Node0xaba7210:s1 -> Node0xaba6400;
+	Node0xaba7240 [shape=record,label="{for.body:                                         \l  %4 = load i32* %i, align 4\l  %idxprom = sext i32 %4 to i64\l  %arrayidx4 = getelementptr inbounds [5 x i8]* @g_2, i32 0, i64 %idxprom\l  %5 = load i8* %arrayidx4, align 1\l  %conv = zext i8 %5 to i64\l  %6 = load i32* %print_hash_value, align 4\l  call void @transparent_crc(i64 %conv, i8* getelementptr inbounds ([7 x i8]*\l... @.str1, i32 0, i32 0), i32 %6)\l  %7 = load i32* %print_hash_value, align 4\l  %tobool = icmp ne i32 %7, 0\l  br i1 %tobool, label %if.then5, label %if.end7\l|{<s0>T|<s1>F}}"];
+	Node0xaba7240:s0 -> Node0xaba6370;
+	Node0xaba7240:s1 -> Node0xaba63a0;
+	Node0xaba6370 [shape=record,label="{if.then5:                                         \l  %8 = load i32* %i, align 4\l  %call6 = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([14 x i8]*\l... @.str2, i32 0, i32 0), i32 %8)\l  br label %if.end7\l}"];
+	Node0xaba6370 -> Node0xaba63a0;
+	Node0xaba63a0 [shape=record,label="{if.end7:                                          \l  br label %for.inc\l}"];
+	Node0xaba63a0 -> Node0xaba63d0;
+	Node0xaba63d0 [shape=record,label="{for.inc:                                          \l  %9 = load i32* %i, align 4\l  %inc = add nsw i32 %9, 1\l  store i32 %inc, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0xaba63d0 -> Node0xaba7210;
+	Node0xaba6400 [shape=record,label="{for.end:                                          \l  %10 = load i32* @crc32_context, align 4\l  %conv8 = zext i32 %10 to i64\l  %xor = xor i64 %conv8, 4294967295\l  %conv9 = trunc i64 %xor to i32\l  %11 = load i32* %print_hash_value, align 4\l  call void @platform_main_end(i32 %conv9, i32 %11)\l  ret i32 0\l}"];
+}

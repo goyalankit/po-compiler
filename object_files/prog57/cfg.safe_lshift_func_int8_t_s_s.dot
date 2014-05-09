@@ -1,0 +1,21 @@
+digraph "CFG for 'safe_lshift_func_int8_t_s_s' function" {
+	label="CFG for 'safe_lshift_func_int8_t_s_s' function";
+
+	Node0xa671320 [shape=record,label="{entry:\l  %left.addr = alloca i8, align 1\l  %right.addr = alloca i32, align 4\l  store i8 %left, i8* %left.addr, align 1\l  store i32 %right, i32* %right.addr, align 4\l  %0 = load i8* %left.addr, align 1\l  %conv = sext i8 %0 to i32\l  %cmp = icmp slt i32 %conv, 0\l  br i1 %cmp, label %cond.true, label %lor.lhs.false\l|{<s0>T|<s1>F}}"];
+	Node0xa671320:s0 -> Node0xa6713e0;
+	Node0xa671320:s1 -> Node0xa671350;
+	Node0xa671350 [shape=record,label="{lor.lhs.false:                                    \l  %1 = load i32* %right.addr, align 4\l  %cmp2 = icmp slt i32 %1, 0\l  br i1 %cmp2, label %cond.true, label %lor.lhs.false4\l|{<s0>T|<s1>F}}"];
+	Node0xa671350:s0 -> Node0xa6713e0;
+	Node0xa671350:s1 -> Node0xa671380;
+	Node0xa671380 [shape=record,label="{lor.lhs.false4:                                   \l  %2 = load i32* %right.addr, align 4\l  %cmp5 = icmp sge i32 %2, 32\l  br i1 %cmp5, label %cond.true, label %lor.lhs.false7\l|{<s0>T|<s1>F}}"];
+	Node0xa671380:s0 -> Node0xa6713e0;
+	Node0xa671380:s1 -> Node0xa6713b0;
+	Node0xa6713b0 [shape=record,label="{lor.lhs.false7:                                   \l  %3 = load i8* %left.addr, align 1\l  %conv8 = sext i8 %3 to i32\l  %4 = load i32* %right.addr, align 4\l  %shr = ashr i32 127, %4\l  %cmp9 = icmp sgt i32 %conv8, %shr\l  br i1 %cmp9, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa6713b0:s0 -> Node0xa6713e0;
+	Node0xa6713b0:s1 -> Node0xa671410;
+	Node0xa6713e0 [shape=record,label="{cond.true:                                        \l  %5 = load i8* %left.addr, align 1\l  %conv11 = sext i8 %5 to i32\l  br label %cond.end\l}"];
+	Node0xa6713e0 -> Node0xa671440;
+	Node0xa671410 [shape=record,label="{cond.false:                                       \l  %6 = load i8* %left.addr, align 1\l  %conv12 = sext i8 %6 to i32\l  %7 = load i32* %right.addr, align 4\l  %shl = shl i32 %conv12, %7\l  br label %cond.end\l}"];
+	Node0xa671410 -> Node0xa671440;
+	Node0xa671440 [shape=record,label="{cond.end:                                         \l  %cond = phi i32 [ %conv11, %cond.true ], [ %shl, %cond.false ]\l  %conv13 = trunc i32 %cond to i8\l  ret i8 %conv13\l}"];
+}

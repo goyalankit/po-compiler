@@ -1,0 +1,5 @@
+digraph "CFG for 'func_8' function" {
+	label="CFG for 'func_8' function";
+
+	Node0xb9d8610 [shape=record,label="{entry:\l  %p_9.addr = alloca i32, align 4\l  %p_10.addr = alloca i32*, align 8\l  %l_1201 = alloca i64, align 8\l  store i32 %p_9, i32* %p_9.addr, align 4\l  store i32* %p_10, i32** %p_10.addr, align 8\l  store i64 -5775766302777214326, i64* %l_1201, align 8\l  %0 = load i32* %p_9.addr, align 4\l  %conv = trunc i32 %0 to i16\l  %call = call signext i16 @safe_lshift_func_int16_t_s_s(i16 signext %conv,\l... i32 12)\l  %conv1 = sext i16 %call to i64\l  store i64 %conv1, i64* %l_1201, align 8\l  %1 = load i64* %l_1201, align 8\l  %conv2 = trunc i64 %1 to i16\l  ret i16 %conv2\l}"];
+}

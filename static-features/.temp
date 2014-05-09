@@ -1,1 +1,15 @@
-opt: .bc: error: Could not open input file: No such file or directory
+===-------------------------------------------------------------------------===
+                          ... Statistics Collected ...
+===-------------------------------------------------------------------------===
+
+129  - STAT: Counts number of basic blocks in a loop
+129  - STAT: Counts number of branch instructions in a loop
+557  - STAT: Counts number of instructions in a loop
+160  - STAT: Counts number of load instructions in a loop
+ 19  - STAT: Counts number of loops
+228  - STAT: Counts number of memory instructions in a loop
+961  - STAT: Counts number of operands in a loop
+594  - STAT: Counts number of operations in a loop
+ 68  - STAT: Counts number of store instructions in a loop
+ 30  - STAT: sum of all depths of loop. divide by loop num to get average depth
+

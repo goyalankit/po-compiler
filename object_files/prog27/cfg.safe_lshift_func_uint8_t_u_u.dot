@@ -1,0 +1,15 @@
+digraph "CFG for 'safe_lshift_func_uint8_t_u_u' function" {
+	label="CFG for 'safe_lshift_func_uint8_t_u_u' function";
+
+	Node0xb34ba90 [shape=record,label="{entry:\l  %left.addr = alloca i8, align 1\l  %right.addr = alloca i32, align 4\l  store i8 %left, i8* %left.addr, align 1\l  store i32 %right, i32* %right.addr, align 4\l  %0 = load i32* %right.addr, align 4\l  %cmp = icmp uge i32 %0, 32\l  br i1 %cmp, label %cond.true, label %lor.lhs.false\l|{<s0>T|<s1>F}}"];
+	Node0xb34ba90:s0 -> Node0xb34baf0;
+	Node0xb34ba90:s1 -> Node0xb34bac0;
+	Node0xb34bac0 [shape=record,label="{lor.lhs.false:                                    \l  %1 = load i8* %left.addr, align 1\l  %conv = zext i8 %1 to i32\l  %2 = load i32* %right.addr, align 4\l  %shr = ashr i32 255, %2\l  %cmp1 = icmp sgt i32 %conv, %shr\l  br i1 %cmp1, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xb34bac0:s0 -> Node0xb34baf0;
+	Node0xb34bac0:s1 -> Node0xb34bb20;
+	Node0xb34baf0 [shape=record,label="{cond.true:                                        \l  %3 = load i8* %left.addr, align 1\l  %conv3 = zext i8 %3 to i32\l  br label %cond.end\l}"];
+	Node0xb34baf0 -> Node0xb34bb50;
+	Node0xb34bb20 [shape=record,label="{cond.false:                                       \l  %4 = load i8* %left.addr, align 1\l  %conv4 = zext i8 %4 to i32\l  %5 = load i32* %right.addr, align 4\l  %shl = shl i32 %conv4, %5\l  br label %cond.end\l}"];
+	Node0xb34bb20 -> Node0xb34bb50;
+	Node0xb34bb50 [shape=record,label="{cond.end:                                         \l  %cond = phi i32 [ %conv3, %cond.true ], [ %shl, %cond.false ]\l  %conv5 = trunc i32 %cond to i8\l  ret i8 %conv5\l}"];
+}

@@ -1,0 +1,5 @@
+digraph "CFG for 'safe_add_func_int16_t_s_s' function" {
+	label="CFG for 'safe_add_func_int16_t_s_s' function";
+
+	Node0xba7a758 [shape=record,label="{entry:\l  %si1.addr = alloca i16, align 2\l  %si2.addr = alloca i16, align 2\l  store i16 %si1, i16* %si1.addr, align 2\l  store i16 %si2, i16* %si2.addr, align 2\l  %0 = load i16* %si1.addr, align 2\l  %conv = sext i16 %0 to i32\l  %1 = load i16* %si2.addr, align 2\l  %conv1 = sext i16 %1 to i32\l  %add = add nsw i32 %conv, %conv1\l  %conv2 = trunc i32 %add to i16\l  ret i16 %conv2\l}"];
+}

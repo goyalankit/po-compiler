@@ -1,0 +1,5 @@
+digraph "CFG for 'func_18' function" {
+	label="CFG for 'func_18' function";
+
+	Node0x9e28e18 [shape=record,label="{entry:\l  %p_19.addr = alloca i32, align 4\l  %l_21 = alloca i32*, align 8\l  %l_20 = alloca i32**, align 8\l  %l_22 = alloca i32, align 4\l  store i32 %p_19, i32* %p_19.addr, align 4\l  store i32* @g_9, i32** %l_21, align 8\l  store i32** %l_21, i32*** %l_20, align 8\l  store i32 1, i32* %l_22, align 4\l  %0 = load i32*** %l_20, align 8\l  store i32* null, i32** %0, align 8\l  %1 = load i32* %l_22, align 4\l  %conv = trunc i32 %1 to i16\l  ret i16 %conv\l}"];
+}

@@ -1,0 +1,30 @@
+digraph "CFG for 'crc32_gentab' function" {
+	label="CFG for 'crc32_gentab' function";
+
+	Node0xa67e688 [shape=record,label="{entry:\l  %crc = alloca i32, align 4\l  %poly = alloca i32, align 4\l  %i = alloca i32, align 4\l  %j = alloca i32, align 4\l  store i32 -306674912, i32* %poly, align 4\l  store i32 0, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0xa67e688 -> Node0xa67e6b8;
+	Node0xa67e6b8 [shape=record,label="{for.cond:                                         \l  %0 = load i32* %i, align 4\l  %cmp = icmp slt i32 %0, 256\l  br i1 %cmp, label %for.body, label %for.end6\l|{<s0>T|<s1>F}}"];
+	Node0xa67e6b8:s0 -> Node0xa67e6e8;
+	Node0xa67e6b8:s1 -> Node0xa67e898;
+	Node0xa67e6e8 [shape=record,label="{for.body:                                         \l  %1 = load i32* %i, align 4\l  store i32 %1, i32* %crc, align 4\l  store i32 8, i32* %j, align 4\l  br label %for.cond1\l}"];
+	Node0xa67e6e8 -> Node0xa67e718;
+	Node0xa67e718 [shape=record,label="{for.cond1:                                        \l  %2 = load i32* %j, align 4\l  %cmp2 = icmp sgt i32 %2, 0\l  br i1 %cmp2, label %for.body3, label %for.end\l|{<s0>T|<s1>F}}"];
+	Node0xa67e718:s0 -> Node0xa67e748;
+	Node0xa67e718:s1 -> Node0xa67e838;
+	Node0xa67e748 [shape=record,label="{for.body3:                                        \l  %3 = load i32* %crc, align 4\l  %and = and i32 %3, 1\l  %tobool = icmp ne i32 %and, 0\l  br i1 %tobool, label %if.then, label %if.else\l|{<s0>T|<s1>F}}"];
+	Node0xa67e748:s0 -> Node0xa67e778;
+	Node0xa67e748:s1 -> Node0xa67e7a8;
+	Node0xa67e778 [shape=record,label="{if.then:                                          \l  %4 = load i32* %crc, align 4\l  %shr = lshr i32 %4, 1\l  %xor = xor i32 %shr, -306674912\l  store i32 %xor, i32* %crc, align 4\l  br label %if.end\l}"];
+	Node0xa67e778 -> Node0xa67e7d8;
+	Node0xa67e7a8 [shape=record,label="{if.else:                                          \l  %5 = load i32* %crc, align 4\l  %shr4 = lshr i32 %5, 1\l  store i32 %shr4, i32* %crc, align 4\l  br label %if.end\l}"];
+	Node0xa67e7a8 -> Node0xa67e7d8;
+	Node0xa67e7d8 [shape=record,label="{if.end:                                           \l  br label %for.inc\l}"];
+	Node0xa67e7d8 -> Node0xa67e808;
+	Node0xa67e808 [shape=record,label="{for.inc:                                          \l  %6 = load i32* %j, align 4\l  %dec = add nsw i32 %6, -1\l  store i32 %dec, i32* %j, align 4\l  br label %for.cond1\l}"];
+	Node0xa67e808 -> Node0xa67e718;
+	Node0xa67e838 [shape=record,label="{for.end:                                          \l  %7 = load i32* %crc, align 4\l  %8 = load i32* %i, align 4\l  %idxprom = sext i32 %8 to i64\l  %arrayidx = getelementptr inbounds [256 x i32]* @crc32_tab, i32 0, i64\l... %idxprom\l  store i32 %7, i32* %arrayidx, align 4\l  br label %for.inc5\l}"];
+	Node0xa67e838 -> Node0xa67e868;
+	Node0xa67e868 [shape=record,label="{for.inc5:                                         \l  %9 = load i32* %i, align 4\l  %inc = add nsw i32 %9, 1\l  store i32 %inc, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0xa67e868 -> Node0xa67e6b8;
+	Node0xa67e898 [shape=record,label="{for.end6:                                         \l  ret void\l}"];
+}

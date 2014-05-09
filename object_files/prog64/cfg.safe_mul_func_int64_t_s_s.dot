@@ -1,0 +1,48 @@
+digraph "CFG for 'safe_mul_func_int64_t_s_s' function" {
+	label="CFG for 'safe_mul_func_int64_t_s_s' function";
+
+	Node0xa901e18 [shape=record,label="{entry:\l  %si1.addr = alloca i64, align 8\l  %si2.addr = alloca i64, align 8\l  store i64 %si1, i64* %si1.addr, align 8\l  store i64 %si2, i64* %si2.addr, align 8\l  %0 = load i64* %si1.addr, align 8\l  %cmp = icmp sgt i64 %0, 0\l  br i1 %cmp, label %land.lhs.true, label %lor.lhs.false\l|{<s0>T|<s1>F}}"];
+	Node0xa901e18:s0 -> Node0xa901e48;
+	Node0xa901e18:s1 -> Node0xa901ea8;
+	Node0xa901e48 [shape=record,label="{land.lhs.true:                                    \l  %1 = load i64* %si2.addr, align 8\l  %cmp1 = icmp sgt i64 %1, 0\l  br i1 %cmp1, label %land.lhs.true2, label %lor.lhs.false\l|{<s0>T|<s1>F}}"];
+	Node0xa901e48:s0 -> Node0xa901e78;
+	Node0xa901e48:s1 -> Node0xa901ea8;
+	Node0xa901e78 [shape=record,label="{land.lhs.true2:                                   \l  %2 = load i64* %si1.addr, align 8\l  %3 = load i64* %si2.addr, align 8\l  %div = sdiv i64 9223372036854775807, %3\l  %cmp3 = icmp sgt i64 %2, %div\l  br i1 %cmp3, label %cond.true, label %lor.lhs.false\l|{<s0>T|<s1>F}}"];
+	Node0xa901e78:s0 -> Node0xa902088;
+	Node0xa901e78:s1 -> Node0xa901ea8;
+	Node0xa901ea8 [shape=record,label="{lor.lhs.false:                                    \l  %4 = load i64* %si1.addr, align 8\l  %cmp4 = icmp sgt i64 %4, 0\l  br i1 %cmp4, label %land.lhs.true5, label %lor.lhs.false10\l|{<s0>T|<s1>F}}"];
+	Node0xa901ea8:s0 -> Node0xa901ed8;
+	Node0xa901ea8:s1 -> Node0xa901f38;
+	Node0xa901ed8 [shape=record,label="{land.lhs.true5:                                   \l  %5 = load i64* %si2.addr, align 8\l  %cmp6 = icmp sle i64 %5, 0\l  br i1 %cmp6, label %land.lhs.true7, label %lor.lhs.false10\l|{<s0>T|<s1>F}}"];
+	Node0xa901ed8:s0 -> Node0xa901f08;
+	Node0xa901ed8:s1 -> Node0xa901f38;
+	Node0xa901f08 [shape=record,label="{land.lhs.true7:                                   \l  %6 = load i64* %si2.addr, align 8\l  %7 = load i64* %si1.addr, align 8\l  %div8 = sdiv i64 -9223372036854775808, %7\l  %cmp9 = icmp slt i64 %6, %div8\l  br i1 %cmp9, label %cond.true, label %lor.lhs.false10\l|{<s0>T|<s1>F}}"];
+	Node0xa901f08:s0 -> Node0xa902088;
+	Node0xa901f08:s1 -> Node0xa901f38;
+	Node0xa901f38 [shape=record,label="{lor.lhs.false10:                                  \l  %8 = load i64* %si1.addr, align 8\l  %cmp11 = icmp sle i64 %8, 0\l  br i1 %cmp11, label %land.lhs.true12, label %lor.lhs.false17\l|{<s0>T|<s1>F}}"];
+	Node0xa901f38:s0 -> Node0xa901f68;
+	Node0xa901f38:s1 -> Node0xa901fc8;
+	Node0xa901f68 [shape=record,label="{land.lhs.true12:                                  \l  %9 = load i64* %si2.addr, align 8\l  %cmp13 = icmp sgt i64 %9, 0\l  br i1 %cmp13, label %land.lhs.true14, label %lor.lhs.false17\l|{<s0>T|<s1>F}}"];
+	Node0xa901f68:s0 -> Node0xa901f98;
+	Node0xa901f68:s1 -> Node0xa901fc8;
+	Node0xa901f98 [shape=record,label="{land.lhs.true14:                                  \l  %10 = load i64* %si1.addr, align 8\l  %11 = load i64* %si2.addr, align 8\l  %div15 = sdiv i64 -9223372036854775808, %11\l  %cmp16 = icmp slt i64 %10, %div15\l  br i1 %cmp16, label %cond.true, label %lor.lhs.false17\l|{<s0>T|<s1>F}}"];
+	Node0xa901f98:s0 -> Node0xa902088;
+	Node0xa901f98:s1 -> Node0xa901fc8;
+	Node0xa901fc8 [shape=record,label="{lor.lhs.false17:                                  \l  %12 = load i64* %si1.addr, align 8\l  %cmp18 = icmp sle i64 %12, 0\l  br i1 %cmp18, label %land.lhs.true19, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa901fc8:s0 -> Node0xa901ff8;
+	Node0xa901fc8:s1 -> Node0xa9020b8;
+	Node0xa901ff8 [shape=record,label="{land.lhs.true19:                                  \l  %13 = load i64* %si2.addr, align 8\l  %cmp20 = icmp sle i64 %13, 0\l  br i1 %cmp20, label %land.lhs.true21, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa901ff8:s0 -> Node0xa902028;
+	Node0xa901ff8:s1 -> Node0xa9020b8;
+	Node0xa902028 [shape=record,label="{land.lhs.true21:                                  \l  %14 = load i64* %si1.addr, align 8\l  %cmp22 = icmp ne i64 %14, 0\l  br i1 %cmp22, label %land.lhs.true23, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa902028:s0 -> Node0xa902058;
+	Node0xa902028:s1 -> Node0xa9020b8;
+	Node0xa902058 [shape=record,label="{land.lhs.true23:                                  \l  %15 = load i64* %si2.addr, align 8\l  %16 = load i64* %si1.addr, align 8\l  %div24 = sdiv i64 9223372036854775807, %16\l  %cmp25 = icmp slt i64 %15, %div24\l  br i1 %cmp25, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa902058:s0 -> Node0xa902088;
+	Node0xa902058:s1 -> Node0xa9020b8;
+	Node0xa902088 [shape=record,label="{cond.true:                                        \l  %17 = load i64* %si1.addr, align 8\l  br label %cond.end\l}"];
+	Node0xa902088 -> Node0xa9020e8;
+	Node0xa9020b8 [shape=record,label="{cond.false:                                       \l  %18 = load i64* %si1.addr, align 8\l  %19 = load i64* %si2.addr, align 8\l  %mul = mul nsw i64 %18, %19\l  br label %cond.end\l}"];
+	Node0xa9020b8 -> Node0xa9020e8;
+	Node0xa9020e8 [shape=record,label="{cond.end:                                         \l  %cond = phi i64 [ %17, %cond.true ], [ %mul, %cond.false ]\l  ret i64 %cond\l}"];
+}

@@ -1,0 +1,5 @@
+digraph "CFG for 'crc32_byte' function" {
+	label="CFG for 'crc32_byte' function";
+
+	Node0xb321880 [shape=record,label="{entry:\l  %b.addr = alloca i8, align 1\l  store i8 %b, i8* %b.addr, align 1\l  %0 = load i32* @crc32_context, align 4\l  %shr = lshr i32 %0, 8\l  %and = and i32 %shr, 16777215\l  %1 = load i32* @crc32_context, align 4\l  %2 = load i8* %b.addr, align 1\l  %conv = zext i8 %2 to i32\l  %xor = xor i32 %1, %conv\l  %and1 = and i32 %xor, 255\l  %idxprom = zext i32 %and1 to i64\l  %arrayidx = getelementptr inbounds [256 x i32]* @crc32_tab, i32 0, i64\l... %idxprom\l  %3 = load i32* %arrayidx, align 4\l  %xor2 = xor i32 %and, %3\l  store i32 %xor2, i32* @crc32_context, align 4\l  ret void\l}"];
+}

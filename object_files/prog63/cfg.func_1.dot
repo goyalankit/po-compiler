@@ -1,0 +1,14 @@
+digraph "CFG for 'func_1' function" {
+	label="CFG for 'func_1' function";
+
+	Node0xb6b28f8 [shape=record,label="{entry:\l  %l_5 = alloca [10 x i32**], align 16\l  %l_6 = alloca i32*, align 8\l  %i = alloca i32, align 4\l  store volatile i32* @g_3, i32** %l_6, align 8\l  store i32 0, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0xb6b28f8 -> Node0xb6b2928;
+	Node0xb6b2928 [shape=record,label="{for.cond:                                         \l  %0 = load i32* %i, align 4\l  %cmp = icmp slt i32 %0, 10\l  br i1 %cmp, label %for.body, label %for.end\l|{<s0>T|<s1>F}}"];
+	Node0xb6b2928:s0 -> Node0xb6b2958;
+	Node0xb6b2928:s1 -> Node0xb6b2c48;
+	Node0xb6b2958 [shape=record,label="{for.body:                                         \l  %1 = load i32* %i, align 4\l  %idxprom = sext i32 %1 to i64\l  %arrayidx = getelementptr inbounds [10 x i32**]* %l_5, i32 0, i64 %idxprom\l  store i32** @g_2, i32*** %arrayidx, align 8\l  br label %for.inc\l}"];
+	Node0xb6b2958 -> Node0xb6b2988;
+	Node0xb6b2988 [shape=record,label="{for.inc:                                          \l  %2 = load i32* %i, align 4\l  %inc = add nsw i32 %2, 1\l  store i32 %inc, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0xb6b2988 -> Node0xb6b2928;
+	Node0xb6b2c48 [shape=record,label="{for.end:                                          \l  %3 = load volatile i32** @g_2, align 8\l  store volatile i32* %3, i32** %l_6, align 8\l  %4 = load volatile i32** %l_6, align 8\l  %5 = load i32* %4, align 4\l  ret i32 %5\l}"];
+}

@@ -1,0 +1,24 @@
+digraph "CFG for 'func_1' function" {
+	label="CFG for 'func_1' function";
+
+	Node0xac75d38 [shape=record,label="{entry:\l  %l_2 = alloca i16, align 2\l  %l_16 = alloca i32, align 4\l  %l_1245 = alloca i32*, align 8\l  %l_1246 = alloca i32*, align 8\l  %l_1247 = alloca i32*, align 8\l  %l_1248 = alloca [3 x i32*], align 16\l  %l_1249 = alloca i32, align 4\l  %i = alloca i32, align 4\l  store i16 -26716, i16* %l_2, align 2\l  store i32 1, i32* %l_16, align 4\l  store i32* @g_1240, i32** %l_1245, align 8\l  store i32* getelementptr inbounds ([10 x [10 x i32]]* @g_110, i32 0, i64 9,\l... i64 0), i32** %l_1246, align 8\l  store i32* @g_1240, i32** %l_1247, align 8\l  store i32 1971142707, i32* %l_1249, align 4\l  store i32 0, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0xac75d38 -> Node0xac75d68;
+	Node0xac75d68 [shape=record,label="{for.cond:                                         \l  %0 = load i32* %i, align 4\l  %cmp = icmp slt i32 %0, 3\l  br i1 %cmp, label %for.body, label %for.end\l|{<s0>T|<s1>F}}"];
+	Node0xac75d68:s0 -> Node0xac75d98;
+	Node0xac75d68:s1 -> Node0xac76090;
+	Node0xac75d98 [shape=record,label="{for.body:                                         \l  %1 = load i32* %i, align 4\l  %idxprom = sext i32 %1 to i64\l  %arrayidx = getelementptr inbounds [3 x i32*]* %l_1248, i32 0, i64 %idxprom\l  store i32* @g_49, i32** %arrayidx, align 8\l  br label %for.inc\l}"];
+	Node0xac75d98 -> Node0xac76060;
+	Node0xac76060 [shape=record,label="{for.inc:                                          \l  %2 = load i32* %i, align 4\l  %inc = add nsw i32 %2, 1\l  store i32 %inc, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0xac76060 -> Node0xac75d68;
+	Node0xac76090 [shape=record,label="{for.end:                                          \l  %3 = load i16* %l_2, align 2\l  %conv = zext i16 %3 to i32\l  %4 = load i16* %l_2, align 2\l  %conv1 = zext i16 %4 to i32\l  %call = call zeroext i16 @safe_lshift_func_uint16_t_u_s(i16 zeroext -9, i32\l... 12)\l  %conv2 = zext i16 %call to i32\l  %tobool = icmp ne i32 %conv2, 0\l  br i1 %tobool, label %lor.end, label %lor.rhs\l|{<s0>T|<s1>F}}"];
+	Node0xac76090:s0 -> Node0xac760f0;
+	Node0xac76090:s1 -> Node0xac760c0;
+	Node0xac760c0 [shape=record,label="{lor.rhs:                                          \l  %5 = load i16* %l_2, align 2\l  %conv3 = zext i16 %5 to i32\l  %tobool4 = icmp ne i32 %conv3, 0\l  br label %lor.end\l}"];
+	Node0xac760c0 -> Node0xac760f0;
+	Node0xac760f0 [shape=record,label="{lor.end:                                          \l  %6 = phi i1 [ true, %for.end ], [ %tobool4, %lor.rhs ]\l  %lor.ext = zext i1 %6 to i32\l  %cmp5 = icmp sgt i32 %conv1, %lor.ext\l  %conv6 = zext i1 %cmp5 to i32\l  %7 = load i8* @g_9, align 1\l  %conv7 = sext i8 %7 to i64\l  %8 = load i16* %l_2, align 2\l  %conv8 = trunc i16 %8 to i8\l  %9 = load i8* @g_9, align 1\l  %conv9 = sext i8 %9 to i32\l  %10 = load i16* %l_2, align 2\l  %conv10 = zext i16 %10 to i32\l  %xor = xor i32 %conv9, %conv10\l  store i32 7, i32* %l_16, align 4\l  %call11 = call i64 @safe_sub_func_uint64_t_u_u(i64 7, i64\l... 4543356657944519866)\l  %and = and i64 %call11, 1\l  %conv12 = trunc i64 %and to i8\l  %call13 = call zeroext i8 @safe_div_func_uint8_t_u_u(i8 zeroext %conv8, i8\l... zeroext %conv12)\l  %11 = load i16* %l_2, align 2\l  %conv14 = zext i16 %11 to i64\l  %call15 = call i64 @safe_add_func_uint64_t_u_u(i64 1, i64 %conv14)\l  %cmp16 = icmp ult i64 %conv7, %call15\l  %conv17 = zext i1 %cmp16 to i32\l  %call18 = call zeroext i8 @func_7(i32 %conv17)\l  %conv19 = zext i8 %call18 to i32\l  %tobool20 = icmp ne i32 %conv19, 0\l  br i1 %tobool20, label %land.rhs, label %land.end\l|{<s0>T|<s1>F}}"];
+	Node0xac760f0:s0 -> Node0xac76120;
+	Node0xac760f0:s1 -> Node0xac76150;
+	Node0xac76120 [shape=record,label="{land.rhs:                                         \l  %12 = load i8** @g_719, align 8\l  %13 = load i8* %12, align 1\l  %conv21 = sext i8 %13 to i32\l  %tobool22 = icmp ne i32 %conv21, 0\l  br label %land.end\l}"];
+	Node0xac76120 -> Node0xac76150;
+	Node0xac76150 [shape=record,label="{land.end:                                         \l  %14 = phi i1 [ false, %lor.end ], [ %tobool22, %land.rhs ]\l  %land.ext = zext i1 %14 to i32\l  %cmp23 = icmp sge i32 %conv6, %land.ext\l  %conv24 = zext i1 %cmp23 to i32\l  %conv25 = trunc i32 %conv24 to i8\l  %call26 = call zeroext i8 @safe_lshift_func_uint8_t_u_u(i8 zeroext %conv25,\l... i32 5)\l  %conv27 = zext i8 %call26 to i32\l  %cmp28 = icmp sge i32 %conv, %conv27\l  %conv29 = zext i1 %cmp28 to i32\l  %15 = load volatile i32*** @g_323, align 8\l  %16 = load i32** %15, align 8\l  store i32 %conv29, i32* %16, align 4\l  %17 = load i32* %l_1249, align 4\l  %dec = add i32 %17, -1\l  store i32 %dec, i32* %l_1249, align 4\l  %18 = load i32*** @g_1120, align 8\l  %19 = load volatile i32** %18, align 8\l  %20 = load volatile i32* %19, align 4\l  ret i32 %20\l}"];
+}
