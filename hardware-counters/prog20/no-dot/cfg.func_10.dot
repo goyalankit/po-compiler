@@ -1,0 +1,14 @@
+digraph "CFG for 'func_10' function" {
+	label="CFG for 'func_10' function";
+
+	Node0x30c6180 [shape=record,label="{entry:\l  %p_11.addr = alloca i64, align 8\l  %p_12.addr = alloca i8, align 1\l  %l_2165 = alloca i8**, align 8\l  %l_2166 = alloca i8***, align 8\l  %l_2167 = alloca [3 x i32*], align 16\l  %i = alloca i32, align 4\l  store i64 %p_11, i64* %p_11.addr, align 8\l  store i8 %p_12, i8* %p_12.addr, align 1\l  store i8** @g_1247, i8*** %l_2165, align 8\l  store i8*** %l_2165, i8**** %l_2166, align 8\l  store i32 0, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0x30c6180 -> Node0x30c61e0;
+	Node0x30c61e0 [shape=record,label="{for.cond:                                         \l  %0 = load i32* %i, align 4\l  %cmp = icmp slt i32 %0, 3\l  br i1 %cmp, label %for.body, label %for.end\l|{<s0>T|<s1>F}}"];
+	Node0x30c61e0:s0 -> Node0x30c6240;
+	Node0x30c61e0:s1 -> Node0x30c6300;
+	Node0x30c6240 [shape=record,label="{for.body:                                         \l  %1 = load i32* %i, align 4\l  %idxprom = sext i32 %1 to i64\l  %arrayidx = getelementptr inbounds [3 x i32*]* %l_2167, i32 0, i64 %idxprom\l  store i32* @g_2100, i32** %arrayidx, align 8\l  br label %for.inc\l}"];
+	Node0x30c6240 -> Node0x30c62a0;
+	Node0x30c62a0 [shape=record,label="{for.inc:                                          \l  %2 = load i32* %i, align 4\l  %inc = add nsw i32 %2, 1\l  store i32 %inc, i32* %i, align 4\l  br label %for.cond\l}"];
+	Node0x30c62a0 -> Node0x30c61e0;
+	Node0x30c6300 [shape=record,label="{for.end:                                          \l  %3 = load i8*** %l_2165, align 8\l  %4 = load i8**** %l_2166, align 8\l  store i8** %3, i8*** %4, align 8\l  %arrayidx1 = getelementptr inbounds [3 x i32*]* %l_2167, i32 0, i64 1\l  %5 = load i32** %arrayidx1, align 8\l  ret i32* %5\l}"];
+}
