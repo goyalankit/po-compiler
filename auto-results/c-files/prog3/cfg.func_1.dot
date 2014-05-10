@@ -1,0 +1,14 @@
+digraph "CFG for 'func_1' function" {
+	label="CFG for 'func_1' function";
+
+	Node0xad0bce8 [shape=record,label="{entry:\l  %retval = alloca %struct.S0, align 4\l  %l_2 = alloca i32*, align 8\l  %l_2582 = alloca i32**, align 8\l  %l_2610 = alloca i32, align 4\l  %l_26 = alloca i32, align 4\l  %l_40 = alloca i32*, align 8\l  %l_1988 = alloca i64*, align 8\l  %l_2604 = alloca i32*, align 8\l  %l_2605 = alloca i32*, align 8\l  %l_2607 = alloca i32*, align 8\l  %l_2608 = alloca [6 x i32*], align 16\l  %i = alloca i32, align 4\l  %tmp = alloca \{ i64, i16 \}\l  store i32* @g_3, i32** %l_2, align 8\l  store i32** null, i32*** %l_2582, align 8\l  store i32 -355198424, i32* %l_2610, align 4\l  %0 = load i32** %l_2, align 8\l  %1 = load volatile i32*** @g_6, align 8\l  store i32* %0, i32** %1, align 8\l  store i32 9, i32* @g_3, align 4\l  br label %for.cond\l}"];
+	Node0xad0bce8 -> Node0xad0bd18;
+	Node0xad0bd18 [shape=record,label="{for.cond:                                         \l  %2 = load i32* @g_3, align 4\l  %cmp = icmp ne i32 %2, 24\l  br i1 %cmp, label %for.body, label %for.end\l|{<s0>T|<s1>F}}"];
+	Node0xad0bd18:s0 -> Node0xad0bd48;
+	Node0xad0bd18:s1 -> Node0xad0c038;
+	Node0xad0bd48 [shape=record,label="{for.body:                                         \l  store i32 1, i32* %l_26, align 4\l  store i32* @g_3, i32** %l_40, align 8\l  store i64* @g_603, i64** %l_1988, align 8\l  store i32* null, i32** %l_2604, align 8\l  store i32* @g_2606, i32** %l_2605, align 8\l  store i32* null, i32** %l_2607, align 8\l  %3 = bitcast [6 x i32*]* %l_2608 to i8*\l  call void @llvm.memcpy.p0i8.p0i8.i64(i8* %3, i8* bitcast ([6 x i32*]*\l... @func_1.l_2608 to i8*), i64 48, i32 16, i1 false)\l  br label %for.inc\l}"];
+	Node0xad0bd48 -> Node0xad0bd78;
+	Node0xad0bd78 [shape=record,label="{for.inc:                                          \l  %4 = load i32* @g_3, align 4\l  %inc = add nsw i32 %4, 1\l  store i32 %inc, i32* @g_3, align 4\l  br label %for.cond\l}"];
+	Node0xad0bd78 -> Node0xad0bd18;
+	Node0xad0c038 [shape=record,label="{for.end:                                          \l  %5 = load %struct.S0*** @g_684, align 8\l  %6 = load volatile %struct.S0** %5, align 8\l  %7 = bitcast %struct.S0* %retval to i8*\l  %8 = bitcast %struct.S0* %6 to i8*\l  call void @llvm.memcpy.p0i8.p0i8.i64(i8* %7, i8* %8, i64 12, i32 4, i1 false)\l  %9 = bitcast \{ i64, i16 \}* %tmp to i8*\l  %10 = bitcast %struct.S0* %retval to i8*\l  call void @llvm.memcpy.p0i8.p0i8.i64(i8* %9, i8* %10, i64 12, i32 1, i1\l... false)\l  %11 = load \{ i64, i16 \}* %tmp\l  ret \{ i64, i16 \} %11\l}"];
+}

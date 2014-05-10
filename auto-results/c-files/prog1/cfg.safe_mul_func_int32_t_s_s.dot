@@ -1,0 +1,48 @@
+digraph "CFG for 'safe_mul_func_int32_t_s_s' function" {
+	label="CFG for 'safe_mul_func_int32_t_s_s' function";
+
+	Node0xa448b20 [shape=record,label="{entry:\l  %si1.addr = alloca i32, align 4\l  %si2.addr = alloca i32, align 4\l  store i32 %si1, i32* %si1.addr, align 4\l  store i32 %si2, i32* %si2.addr, align 4\l  %0 = load i32* %si1.addr, align 4\l  %cmp = icmp sgt i32 %0, 0\l  br i1 %cmp, label %land.lhs.true, label %lor.lhs.false\l|{<s0>T|<s1>F}}"];
+	Node0xa448b20:s0 -> Node0xa448b50;
+	Node0xa448b20:s1 -> Node0xa448bb0;
+	Node0xa448b50 [shape=record,label="{land.lhs.true:                                    \l  %1 = load i32* %si2.addr, align 4\l  %cmp1 = icmp sgt i32 %1, 0\l  br i1 %cmp1, label %land.lhs.true2, label %lor.lhs.false\l|{<s0>T|<s1>F}}"];
+	Node0xa448b50:s0 -> Node0xa448b80;
+	Node0xa448b50:s1 -> Node0xa448bb0;
+	Node0xa448b80 [shape=record,label="{land.lhs.true2:                                   \l  %2 = load i32* %si1.addr, align 4\l  %3 = load i32* %si2.addr, align 4\l  %div = sdiv i32 2147483647, %3\l  %cmp3 = icmp sgt i32 %2, %div\l  br i1 %cmp3, label %cond.true, label %lor.lhs.false\l|{<s0>T|<s1>F}}"];
+	Node0xa448b80:s0 -> Node0xa448d90;
+	Node0xa448b80:s1 -> Node0xa448bb0;
+	Node0xa448bb0 [shape=record,label="{lor.lhs.false:                                    \l  %4 = load i32* %si1.addr, align 4\l  %cmp4 = icmp sgt i32 %4, 0\l  br i1 %cmp4, label %land.lhs.true5, label %lor.lhs.false10\l|{<s0>T|<s1>F}}"];
+	Node0xa448bb0:s0 -> Node0xa448be0;
+	Node0xa448bb0:s1 -> Node0xa448c40;
+	Node0xa448be0 [shape=record,label="{land.lhs.true5:                                   \l  %5 = load i32* %si2.addr, align 4\l  %cmp6 = icmp sle i32 %5, 0\l  br i1 %cmp6, label %land.lhs.true7, label %lor.lhs.false10\l|{<s0>T|<s1>F}}"];
+	Node0xa448be0:s0 -> Node0xa448c10;
+	Node0xa448be0:s1 -> Node0xa448c40;
+	Node0xa448c10 [shape=record,label="{land.lhs.true7:                                   \l  %6 = load i32* %si2.addr, align 4\l  %7 = load i32* %si1.addr, align 4\l  %div8 = sdiv i32 -2147483648, %7\l  %cmp9 = icmp slt i32 %6, %div8\l  br i1 %cmp9, label %cond.true, label %lor.lhs.false10\l|{<s0>T|<s1>F}}"];
+	Node0xa448c10:s0 -> Node0xa448d90;
+	Node0xa448c10:s1 -> Node0xa448c40;
+	Node0xa448c40 [shape=record,label="{lor.lhs.false10:                                  \l  %8 = load i32* %si1.addr, align 4\l  %cmp11 = icmp sle i32 %8, 0\l  br i1 %cmp11, label %land.lhs.true12, label %lor.lhs.false17\l|{<s0>T|<s1>F}}"];
+	Node0xa448c40:s0 -> Node0xa448c70;
+	Node0xa448c40:s1 -> Node0xa448cd0;
+	Node0xa448c70 [shape=record,label="{land.lhs.true12:                                  \l  %9 = load i32* %si2.addr, align 4\l  %cmp13 = icmp sgt i32 %9, 0\l  br i1 %cmp13, label %land.lhs.true14, label %lor.lhs.false17\l|{<s0>T|<s1>F}}"];
+	Node0xa448c70:s0 -> Node0xa448ca0;
+	Node0xa448c70:s1 -> Node0xa448cd0;
+	Node0xa448ca0 [shape=record,label="{land.lhs.true14:                                  \l  %10 = load i32* %si1.addr, align 4\l  %11 = load i32* %si2.addr, align 4\l  %div15 = sdiv i32 -2147483648, %11\l  %cmp16 = icmp slt i32 %10, %div15\l  br i1 %cmp16, label %cond.true, label %lor.lhs.false17\l|{<s0>T|<s1>F}}"];
+	Node0xa448ca0:s0 -> Node0xa448d90;
+	Node0xa448ca0:s1 -> Node0xa448cd0;
+	Node0xa448cd0 [shape=record,label="{lor.lhs.false17:                                  \l  %12 = load i32* %si1.addr, align 4\l  %cmp18 = icmp sle i32 %12, 0\l  br i1 %cmp18, label %land.lhs.true19, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa448cd0:s0 -> Node0xa448d00;
+	Node0xa448cd0:s1 -> Node0xa448dc0;
+	Node0xa448d00 [shape=record,label="{land.lhs.true19:                                  \l  %13 = load i32* %si2.addr, align 4\l  %cmp20 = icmp sle i32 %13, 0\l  br i1 %cmp20, label %land.lhs.true21, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa448d00:s0 -> Node0xa448d30;
+	Node0xa448d00:s1 -> Node0xa448dc0;
+	Node0xa448d30 [shape=record,label="{land.lhs.true21:                                  \l  %14 = load i32* %si1.addr, align 4\l  %cmp22 = icmp ne i32 %14, 0\l  br i1 %cmp22, label %land.lhs.true23, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa448d30:s0 -> Node0xa448d60;
+	Node0xa448d30:s1 -> Node0xa448dc0;
+	Node0xa448d60 [shape=record,label="{land.lhs.true23:                                  \l  %15 = load i32* %si2.addr, align 4\l  %16 = load i32* %si1.addr, align 4\l  %div24 = sdiv i32 2147483647, %16\l  %cmp25 = icmp slt i32 %15, %div24\l  br i1 %cmp25, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa448d60:s0 -> Node0xa448d90;
+	Node0xa448d60:s1 -> Node0xa448dc0;
+	Node0xa448d90 [shape=record,label="{cond.true:                                        \l  %17 = load i32* %si1.addr, align 4\l  br label %cond.end\l}"];
+	Node0xa448d90 -> Node0xa448df0;
+	Node0xa448dc0 [shape=record,label="{cond.false:                                       \l  %18 = load i32* %si1.addr, align 4\l  %19 = load i32* %si2.addr, align 4\l  %mul = mul nsw i32 %18, %19\l  br label %cond.end\l}"];
+	Node0xa448dc0 -> Node0xa448df0;
+	Node0xa448df0 [shape=record,label="{cond.end:                                         \l  %cond = phi i32 [ %17, %cond.true ], [ %mul, %cond.false ]\l  ret i32 %cond\l}"];
+}

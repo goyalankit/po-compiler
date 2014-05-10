@@ -1,0 +1,5 @@
+digraph "CFG for 'func_1' function" {
+	label="CFG for 'func_1' function";
+
+	Node0x9f637f8 [shape=record,label="{entry:\l  %l_5 = alloca i32*, align 8\l  store i32* @g_3, i32** %l_5, align 8\l  %0 = load volatile i32** @g_2, align 8\l  %1 = load volatile i32*** @g_4, align 8\l  store volatile i32* %0, i32** %1, align 8\l  %2 = load volatile i32** @g_2, align 8\l  %3 = load volatile i32* %2, align 4\l  %4 = load i32** %l_5, align 8\l  store volatile i32 %3, i32* %4, align 4\l  %5 = load i32** %l_5, align 8\l  %6 = load volatile i32* %5, align 4\l  %conv = sext i32 %6 to i64\l  ret i64 %conv\l}"];
+}

@@ -1,0 +1,12 @@
+digraph "CFG for 'BottomUpTree' function" {
+	label="CFG for 'BottomUpTree' function";
+
+	Node0x9df9908 [shape=record,label="{entry:\l  %retval = alloca %struct.tn*, align 8\l  %item.addr = alloca i64, align 8\l  %depth.addr = alloca i32, align 4\l  store i64 %item, i64* %item.addr, align 8\l  store i32 %depth, i32* %depth.addr, align 4\l  %0 = load i32* %depth.addr, align 4\l  %cmp = icmp ugt i32 %0, 0\l  br i1 %cmp, label %if.then, label %if.else\l|{<s0>T|<s1>F}}"];
+	Node0x9df9908:s0 -> Node0x9df9938;
+	Node0x9df9908:s1 -> Node0x9df9968;
+	Node0x9df9938 [shape=record,label="{if.then:                                          \l  %1 = load i64* %item.addr, align 8\l  %mul = mul nsw i64 2, %1\l  %sub = sub nsw i64 %mul, 1\l  %2 = load i32* %depth.addr, align 4\l  %sub1 = sub i32 %2, 1\l  %call = call %struct.tn* @BottomUpTree(i64 %sub, i32 %sub1)\l  %3 = load i64* %item.addr, align 8\l  %mul2 = mul nsw i64 2, %3\l  %4 = load i32* %depth.addr, align 4\l  %sub3 = sub i32 %4, 1\l  %call4 = call %struct.tn* @BottomUpTree(i64 %mul2, i32 %sub3)\l  %5 = load i64* %item.addr, align 8\l  %call5 = call %struct.tn* @NewTreeNode(%struct.tn* %call, %struct.tn*\l... %call4, i64 %5)\l  store %struct.tn* %call5, %struct.tn** %retval\l  br label %return\l}"];
+	Node0x9df9938 -> Node0x9df9998;
+	Node0x9df9968 [shape=record,label="{if.else:                                          \l  %6 = load i64* %item.addr, align 8\l  %call6 = call %struct.tn* @NewTreeNode(%struct.tn* null, %struct.tn* null,\l... i64 %6)\l  store %struct.tn* %call6, %struct.tn** %retval\l  br label %return\l}"];
+	Node0x9df9968 -> Node0x9df9998;
+	Node0x9df9998 [shape=record,label="{return:                                           \l  %7 = load %struct.tn** %retval\l  ret %struct.tn* %7\l}"];
+}

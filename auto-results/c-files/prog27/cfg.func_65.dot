@@ -1,0 +1,5 @@
+digraph "CFG for 'func_65' function" {
+	label="CFG for 'func_65' function";
+
+	Node0xac89e60 [shape=record,label="{entry:\l  %p_66.addr = alloca i64, align 8\l  %p_67.addr = alloca i8, align 1\l  %p_68.addr = alloca i16, align 2\l  %p_69.addr = alloca i32, align 4\l  %p_70.addr = alloca i8**, align 8\l  %l_77 = alloca i32*, align 8\l  store i64 %p_66, i64* %p_66.addr, align 8\l  store i8 %p_67, i8* %p_67.addr, align 1\l  store i16 %p_68, i16* %p_68.addr, align 2\l  store i32 %p_69, i32* %p_69.addr, align 4\l  store i8** %p_70, i8*** %p_70.addr, align 8\l  store i32* @g_78, i32** %l_77, align 8\l  %0 = load i32* %p_69.addr, align 4\l  %conv = sext i32 %0 to i64\l  %1 = load i8* getelementptr inbounds ([1 x i8]* @g_22, i32 0, i64 0), align 1\l  %conv1 = zext i8 %1 to i64\l  %call = call i64 @safe_sub_func_uint64_t_u_u(i64 %conv, i64 %conv1)\l  %2 = load i32** %l_77, align 8\l  %3 = load i32* %2, align 4\l  %conv2 = sext i32 %3 to i64\l  %xor = xor i64 %conv2, %call\l  %conv3 = trunc i64 %xor to i32\l  store i32 %conv3, i32* %2, align 4\l  %4 = load i32** %l_77, align 8\l  %5 = load i32* %4, align 4\l  %conv4 = sext i32 %5 to i64\l  ret i64 %conv4\l}"];
+}

@@ -1,0 +1,12 @@
+digraph "CFG for 'safe_mod_func_uint32_t_u_u' function" {
+	label="CFG for 'safe_mod_func_uint32_t_u_u' function";
+
+	Node0xa688678 [shape=record,label="{entry:\l  %ui1.addr = alloca i32, align 4\l  %ui2.addr = alloca i32, align 4\l  store i32 %ui1, i32* %ui1.addr, align 4\l  store i32 %ui2, i32* %ui2.addr, align 4\l  %0 = load i32* %ui2.addr, align 4\l  %cmp = icmp eq i32 %0, 0\l  br i1 %cmp, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xa688678:s0 -> Node0xa6886a8;
+	Node0xa688678:s1 -> Node0xa6886d8;
+	Node0xa6886a8 [shape=record,label="{cond.true:                                        \l  %1 = load i32* %ui1.addr, align 4\l  br label %cond.end\l}"];
+	Node0xa6886a8 -> Node0xa688708;
+	Node0xa6886d8 [shape=record,label="{cond.false:                                       \l  %2 = load i32* %ui1.addr, align 4\l  %3 = load i32* %ui2.addr, align 4\l  %rem = urem i32 %2, %3\l  br label %cond.end\l}"];
+	Node0xa6886d8 -> Node0xa688708;
+	Node0xa688708 [shape=record,label="{cond.end:                                         \l  %cond = phi i32 [ %1, %cond.true ], [ %rem, %cond.false ]\l  ret i32 %cond\l}"];
+}

@@ -1,0 +1,12 @@
+digraph "CFG for 'safe_mod_func_uint8_t_u_u' function" {
+	label="CFG for 'safe_mod_func_uint8_t_u_u' function";
+
+	Node0xacc7ca0 [shape=record,label="{entry:\l  %ui1.addr = alloca i8, align 1\l  %ui2.addr = alloca i8, align 1\l  store i8 %ui1, i8* %ui1.addr, align 1\l  store i8 %ui2, i8* %ui2.addr, align 1\l  %0 = load i8* %ui2.addr, align 1\l  %conv = zext i8 %0 to i32\l  %cmp = icmp eq i32 %conv, 0\l  br i1 %cmp, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xacc7ca0:s0 -> Node0xacc7cd0;
+	Node0xacc7ca0:s1 -> Node0xacc7d00;
+	Node0xacc7cd0 [shape=record,label="{cond.true:                                        \l  %1 = load i8* %ui1.addr, align 1\l  %conv2 = zext i8 %1 to i32\l  br label %cond.end\l}"];
+	Node0xacc7cd0 -> Node0xacc7d30;
+	Node0xacc7d00 [shape=record,label="{cond.false:                                       \l  %2 = load i8* %ui1.addr, align 1\l  %conv3 = zext i8 %2 to i32\l  %3 = load i8* %ui2.addr, align 1\l  %conv4 = zext i8 %3 to i32\l  %rem = srem i32 %conv3, %conv4\l  br label %cond.end\l}"];
+	Node0xacc7d00 -> Node0xacc7d30;
+	Node0xacc7d30 [shape=record,label="{cond.end:                                         \l  %cond = phi i32 [ %conv2, %cond.true ], [ %rem, %cond.false ]\l  %conv5 = trunc i32 %cond to i8\l  ret i8 %conv5\l}"];
+}

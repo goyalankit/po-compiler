@@ -1,0 +1,5 @@
+digraph "CFG for 'platform_main_end' function" {
+	label="CFG for 'platform_main_end' function";
+
+	Node0xafcb4b0 [shape=record,label="{entry:\l  %crc.addr = alloca i32, align 4\l  %flag.addr = alloca i32, align 4\l  store i32 %crc, i32* %crc.addr, align 4\l  store i32 %flag, i32* %flag.addr, align 4\l  %0 = load i32* %crc.addr, align 4\l  %call = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([15 x i8]*\l... @.str69, i32 0, i32 0), i32 %0)\l  ret void\l}"];
+}

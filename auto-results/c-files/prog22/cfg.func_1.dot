@@ -1,0 +1,5 @@
+digraph "CFG for 'func_1' function" {
+	label="CFG for 'func_1' function";
+
+	Node0x9c215f8 [shape=record,label="{entry:\l  %l_3 = alloca [3 x [5 x [6 x i32*]]], align 16\l  %i = alloca i32, align 4\l  %j = alloca i32, align 4\l  %k = alloca i32, align 4\l  %0 = bitcast [3 x [5 x [6 x i32*]]]* %l_3 to i8*\l  call void @llvm.memcpy.p0i8.p0i8.i64(i8* %0, i8* bitcast ([3 x [5 x [6 x\l... i32*]]]* @func_1.l_3 to i8*), i64 720, i32 16, i1 false)\l  %1 = load volatile i16* @g_2, align 2\l  %conv = sext i16 %1 to i32\l  store volatile i32 %conv, i32* @g_4, align 4\l  %2 = load volatile i32* @g_4, align 4\l  ret i32 %2\l}"];
+}

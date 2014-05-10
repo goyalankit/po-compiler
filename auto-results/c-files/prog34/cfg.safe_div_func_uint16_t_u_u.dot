@@ -1,0 +1,12 @@
+digraph "CFG for 'safe_div_func_uint16_t_u_u' function" {
+	label="CFG for 'safe_div_func_uint16_t_u_u' function";
+
+	Node0xace1e10 [shape=record,label="{entry:\l  %ui1.addr = alloca i16, align 2\l  %ui2.addr = alloca i16, align 2\l  store i16 %ui1, i16* %ui1.addr, align 2\l  store i16 %ui2, i16* %ui2.addr, align 2\l  %0 = load i16* %ui2.addr, align 2\l  %conv = zext i16 %0 to i32\l  %cmp = icmp eq i32 %conv, 0\l  br i1 %cmp, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xace1e10:s0 -> Node0xace1e40;
+	Node0xace1e10:s1 -> Node0xace1e70;
+	Node0xace1e40 [shape=record,label="{cond.true:                                        \l  %1 = load i16* %ui1.addr, align 2\l  %conv2 = zext i16 %1 to i32\l  br label %cond.end\l}"];
+	Node0xace1e40 -> Node0xace1ea0;
+	Node0xace1e70 [shape=record,label="{cond.false:                                       \l  %2 = load i16* %ui1.addr, align 2\l  %conv3 = zext i16 %2 to i32\l  %3 = load i16* %ui2.addr, align 2\l  %conv4 = zext i16 %3 to i32\l  %div = sdiv i32 %conv3, %conv4\l  br label %cond.end\l}"];
+	Node0xace1e70 -> Node0xace1ea0;
+	Node0xace1ea0 [shape=record,label="{cond.end:                                         \l  %cond = phi i32 [ %conv2, %cond.true ], [ %div, %cond.false ]\l  %conv5 = trunc i32 %cond to i16\l  ret i16 %conv5\l}"];
+}

@@ -1,0 +1,5 @@
+digraph "CFG for 'safe_unary_minus_func_int8_t_s' function" {
+	label="CFG for 'safe_unary_minus_func_int8_t_s' function";
+
+	Node0xa68b318 [shape=record,label="{entry:\l  %si.addr = alloca i8, align 1\l  store i8 %si, i8* %si.addr, align 1\l  %0 = load i8* %si.addr, align 1\l  %conv = sext i8 %0 to i32\l  %sub = sub nsw i32 0, %conv\l  %conv1 = trunc i32 %sub to i8\l  ret i8 %conv1\l}"];
+}

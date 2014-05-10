@@ -1,0 +1,5 @@
+digraph "CFG for 'safe_sub_func_uint32_t_u_u' function" {
+	label="CFG for 'safe_sub_func_uint32_t_u_u' function";
+
+	Node0xa94dbc8 [shape=record,label="{entry:\l  %ui1.addr = alloca i32, align 4\l  %ui2.addr = alloca i32, align 4\l  store i32 %ui1, i32* %ui1.addr, align 4\l  store i32 %ui2, i32* %ui2.addr, align 4\l  %0 = load i32* %ui1.addr, align 4\l  %1 = load i32* %ui2.addr, align 4\l  %sub = sub i32 %0, %1\l  ret i32 %sub\l}"];
+}

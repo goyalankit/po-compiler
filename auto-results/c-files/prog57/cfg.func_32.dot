@@ -1,0 +1,16 @@
+digraph "CFG for 'func_32' function" {
+	label="CFG for 'func_32' function";
+
+	Node0xb9eeaa0 [shape=record,label="{entry:\l  %retval = alloca i16, align 2\l  %p_33.addr = alloca i16*, align 8\l  %l_129 = alloca i32*, align 8\l  %l_130 = alloca i32**, align 8\l  %l_131 = alloca i32, align 4\l  %i = alloca i32, align 4\l  store i16* %p_33, i16** %p_33.addr, align 8\l  store i32* null, i32** %l_129, align 8\l  store i32** %l_129, i32*** %l_130, align 8\l  store i32 1944154472, i32* %l_131, align 4\l  %0 = load i32** %l_129, align 8\l  %1 = load i32*** %l_130, align 8\l  store i32* %0, i32** %1, align 8\l  store i32 1, i32* @g_87, align 4\l  br label %for.cond\l}"];
+	Node0xb9eeaa0 -> Node0xb9eead0;
+	Node0xb9eead0 [shape=record,label="{for.cond:                                         \l  %2 = load i32* @g_87, align 4\l  %cmp = icmp sge i32 %2, 0\l  br i1 %cmp, label %for.body, label %for.end\l|{<s0>T|<s1>F}}"];
+	Node0xb9eead0:s0 -> Node0xb9eeb00;
+	Node0xb9eead0:s1 -> Node0xb9eeb60;
+	Node0xb9eeb00 [shape=record,label="{for.body:                                         \l  %3 = load i32* @g_87, align 4\l  %add = add nsw i32 %3, 4\l  %idxprom = sext i32 %add to i64\l  %arrayidx = getelementptr inbounds [6 x i32]* @g_62, i32 0, i64 %idxprom\l  %4 = load i32* %arrayidx, align 4\l  %conv = trunc i32 %4 to i16\l  store i16 %conv, i16* %retval\l  br label %return\l}"];
+	Node0xb9eeb00 -> Node0xb9eeb90;
+	Node0xb9eeb30 [shape=record,label="{for.inc:                                          \l  %5 = load i32* @g_87, align 4\l  %sub = sub nsw i32 %5, 1\l  store i32 %sub, i32* @g_87, align 4\l  br label %for.cond\l}"];
+	Node0xb9eeb30 -> Node0xb9eead0;
+	Node0xb9eeb60 [shape=record,label="{for.end:                                          \l  %6 = load i32* %l_131, align 4\l  %7 = load i8**** @g_134, align 8\l  %cmp1 = icmp ne i8*** %7, null\l  %conv2 = zext i1 %cmp1 to i32\l  %conv3 = trunc i32 %conv2 to i8\l  %call = call zeroext i8 @safe_rshift_func_uint8_t_u_u(i8 zeroext %conv3, i32\l... 5)\l  %conv4 = zext i8 %call to i32\l  %cmp5 = icmp sge i32 %6, %conv4\l  %conv6 = zext i1 %cmp5 to i32\l  %8 = load i32* @g_87, align 4\l  %or = or i32 %8, %conv6\l  store i32 %or, i32* @g_87, align 4\l  %9 = load i64* getelementptr inbounds ([1 x [1 x [7 x i64]]]* @g_116, i32 0,\l... i64 0, i64 0, i64 1), align 8\l  %conv7 = trunc i64 %9 to i16\l  store i16 %conv7, i16* %retval\l  br label %return\l}"];
+	Node0xb9eeb60 -> Node0xb9eeb90;
+	Node0xb9eeb90 [shape=record,label="{return:                                           \l  %10 = load i16* %retval\l  ret i16 %10\l}"];
+}

@@ -1,0 +1,5 @@
+digraph "CFG for 'func_1' function" {
+	label="CFG for 'func_1' function";
+
+	Node0xae7b4a8 [shape=record,label="{entry:\l  %0 = load i16* getelementptr inbounds ([10 x [7 x i16]]* @g_2, i32 0, i64 3,\l... i64 5), align 2\l  %conv = zext i16 %0 to i32\l  ret i32 %conv\l}"];
+}

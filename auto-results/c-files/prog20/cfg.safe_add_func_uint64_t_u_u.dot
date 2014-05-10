@@ -1,0 +1,5 @@
+digraph "CFG for 'safe_add_func_uint64_t_u_u' function" {
+	label="CFG for 'safe_add_func_uint64_t_u_u' function";
+
+	Node0xbb96db8 [shape=record,label="{entry:\l  %ui1.addr = alloca i64, align 8\l  %ui2.addr = alloca i64, align 8\l  store i64 %ui1, i64* %ui1.addr, align 8\l  store i64 %ui2, i64* %ui2.addr, align 8\l  %0 = load i64* %ui1.addr, align 8\l  %1 = load i64* %ui2.addr, align 8\l  %add = add i64 %0, %1\l  ret i64 %add\l}"];
+}

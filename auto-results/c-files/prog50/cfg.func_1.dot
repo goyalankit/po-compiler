@@ -1,0 +1,16 @@
+digraph "CFG for 'func_1' function" {
+	label="CFG for 'func_1' function";
+
+	Node0xa350c70 [shape=record,label="{entry:\l  %retval = alloca i64, align 8\l  store i32 25, i32* @g_2, align 4\l  br label %for.cond\l}"];
+	Node0xa350c70 -> Node0xa350ca0;
+	Node0xa350ca0 [shape=record,label="{for.cond:                                         \l  %0 = load i32* @g_2, align 4\l  %cmp = icmp ne i32 %0, 27\l  br i1 %cmp, label %for.body, label %for.end\l|{<s0>T|<s1>F}}"];
+	Node0xa350ca0:s0 -> Node0xa350cd0;
+	Node0xa350ca0:s1 -> Node0xa350fc8;
+	Node0xa350cd0 [shape=record,label="{for.body:                                         \l  %1 = load i32* @g_2, align 4\l  %conv = sext i32 %1 to i64\l  store i64 %conv, i64* %retval\l  br label %return\l}"];
+	Node0xa350cd0 -> Node0xa350ff8;
+	Node0xa350f98 [shape=record,label="{for.inc:                                          \l  %2 = load i32* @g_2, align 4\l  %conv1 = sext i32 %2 to i64\l  %call = call i64 @safe_add_func_int64_t_s_s(i64 %conv1, i64 5)\l  %conv2 = trunc i64 %call to i32\l  store i32 %conv2, i32* @g_2, align 4\l  br label %for.cond\l}"];
+	Node0xa350f98 -> Node0xa350ca0;
+	Node0xa350fc8 [shape=record,label="{for.end:                                          \l  store i64 3, i64* %retval\l  br label %return\l}"];
+	Node0xa350fc8 -> Node0xa350ff8;
+	Node0xa350ff8 [shape=record,label="{return:                                           \l  %3 = load i64* %retval\l  ret i64 %3\l}"];
+}

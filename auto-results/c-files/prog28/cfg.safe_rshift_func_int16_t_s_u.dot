@@ -1,0 +1,15 @@
+digraph "CFG for 'safe_rshift_func_int16_t_s_u' function" {
+	label="CFG for 'safe_rshift_func_int16_t_s_u' function";
+
+	Node0xb8d9678 [shape=record,label="{entry:\l  %left.addr = alloca i16, align 2\l  %right.addr = alloca i32, align 4\l  store i16 %left, i16* %left.addr, align 2\l  store i32 %right, i32* %right.addr, align 4\l  %0 = load i16* %left.addr, align 2\l  %conv = sext i16 %0 to i32\l  %cmp = icmp slt i32 %conv, 0\l  br i1 %cmp, label %cond.true, label %lor.lhs.false\l|{<s0>T|<s1>F}}"];
+	Node0xb8d9678:s0 -> Node0xb8d96d8;
+	Node0xb8d9678:s1 -> Node0xb8d96a8;
+	Node0xb8d96a8 [shape=record,label="{lor.lhs.false:                                    \l  %1 = load i32* %right.addr, align 4\l  %cmp2 = icmp uge i32 %1, 32\l  br i1 %cmp2, label %cond.true, label %cond.false\l|{<s0>T|<s1>F}}"];
+	Node0xb8d96a8:s0 -> Node0xb8d96d8;
+	Node0xb8d96a8:s1 -> Node0xb8d9708;
+	Node0xb8d96d8 [shape=record,label="{cond.true:                                        \l  %2 = load i16* %left.addr, align 2\l  %conv4 = sext i16 %2 to i32\l  br label %cond.end\l}"];
+	Node0xb8d96d8 -> Node0xb8d9738;
+	Node0xb8d9708 [shape=record,label="{cond.false:                                       \l  %3 = load i16* %left.addr, align 2\l  %conv5 = sext i16 %3 to i32\l  %4 = load i32* %right.addr, align 4\l  %shr = ashr i32 %conv5, %4\l  br label %cond.end\l}"];
+	Node0xb8d9708 -> Node0xb8d9738;
+	Node0xb8d9738 [shape=record,label="{cond.end:                                         \l  %cond = phi i32 [ %conv4, %cond.true ], [ %shr, %cond.false ]\l  %conv6 = trunc i32 %cond to i16\l  ret i16 %conv6\l}"];
+}

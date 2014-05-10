@@ -1,0 +1,5 @@
+digraph "CFG for 'platform_main_begin' function" {
+	label="CFG for 'platform_main_begin' function";
+
+	Node0x9c79cd8 [shape=record,label="{entry:\l  ret void\l}"];
+}
