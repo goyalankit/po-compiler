@@ -1,4 +1,4 @@
-all: ModuleInfo.so 
+all: ModuleInfo.so FunctionInfo.so
 
 nice: all loop-out.bc
 
