@@ -154,7 +154,7 @@ void runOptimizationPasses() {
 
     curr_pass_order = curr_pass_order + string(" ") + pt.pass_name;
 
-    cout << "Appending " << pt.pass_name << " | Current Pass Order " << curr_pass_order << endl;
+    cout << "Appending " << pt.pass_name << " | Current Pass Order " << curr_pass_order  << " PassTime " << pt.time << endl;
     pass_length++;
   }
  
