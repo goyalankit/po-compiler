@@ -8,7 +8,8 @@
 #include <string>
 #include <stdlib.h>
 #include <time.h>
-//#include "omp.h"
+#include<sys/time.h>
+#include "omp.h"
 #include <vector>
 
 #include <boost/algorithm/string.hpp>
@@ -20,9 +21,9 @@ using namespace boost::algorithm;
 #include "pass_runner.h"
 
 #define NUM_THREADS 8 // default number of threads
-#define MAX_NUM_PER_THREAD 100
+#define MAX_NUM_PER_THREAD 1
 #define RERUN_COUNT 10
-#define MAX_PASS_LENGTH 30
+#define MAX_PASS_LENGTH 10
 
 
 #if(0)
@@ -44,6 +45,8 @@ char *binaryArgs;
 char *input_combination_file;
 string dir_name;
 
+struct timeval start, end_time;
+
 #define _SYSTEM_CALL( CMD ) ( {            \
     int err = ( system( CMD.c_str() ) );   \
     if ( err < 0  ) {                      \ 
@@ -58,19 +61,18 @@ inline COMMAND::COMMAND(string pass_order, long double threadId) {
   // opt -pass1 -pass2 ./bcfile -o temp.out.threadId >> /dev/null
 
   // combination_file_name/temp.out.input_combination_filename
-  string temp_name = dir_name + string("/temp.out."); //+ input_combination_file;
-  std::cout << "Running command " << pass_order << std::endl;
-
-  opt = string("opt ") + pass_order + " ./"  + binaryName + " -o "+ temp_name  + "" + to_string(threadId) + " >> /dev/null";
+  string temp_name = dir_name + string("./temp.out") + to_string(threadId); //+ input_combination_file;
+  
+  opt = string("opt ") + pass_order + " ./"  + binaryName + " -o "+ temp_name  + "" + " >> /dev/null";
   // Command to execute the file.
-  lli = string("lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
+  lli = string("lli ") + temp_name + " " + binaryArgs;
 }
 
 
 struct passTime
 {
   string pass_name;
-  long time;
+  double time;
 };
 
 class PassTimeComparator
@@ -112,39 +114,47 @@ void runOptimizationPasses() {
   vector<string> &optimizationPasses = getOptimizationPasses();
 
   clock_t t1,t2;
+  std::chrono::time_point<std::chrono::system_clock> start, end;
   float diff;
   long double tid;
   string pass_name;
   int pass_length = 0;
+  string curr_pass_order = string("");
   while(pass_length < MAX_PASS_LENGTH) {
-    string curr_pass_order = string("");
     priority_queue< passTime, vector< passTime >, PassTimeComparator> curr_pq;
-#pragma omp parallel for private(pass_name)
+#pragma omp parallel for private(pass_name, tid)
     for( int i = 0; i < optimizationPasses.size() ; ++i ) {
       pass_name = optimizationPasses[i];
       string temp_pass_order = curr_pass_order + string(" ") + pass_name;
       std::cout << pass_name << std::endl;
-      
+      tid = omp_get_thread_num();
       // apply pass here
-      COMMAND Cmd(pass_name, tid);
+      COMMAND Cmd(temp_pass_order, tid);
       _SYSTEM_CALL(Cmd.opt);
 
       // run RERUN_COUNT number of times to get the time
         // START TIMER HERE
+       start = std::chrono::system_clock::now();
       for(int j=0; j < RERUN_COUNT; j++) {
-
+      	_SYSTEM_CALL(Cmd.lli);
       }
-      long time_taken_by_current_pass = 1000;
+      end = std::chrono::system_clock::now();
+      std::chrono::duration<double> elapsed_seconds = end-start;
+      double time_taken_by_current_pass = elapsed_seconds.count();
       // STOP TIMER HERE
 #ifdef DEBUG
-      cout << "Running Command: " << Cmd.opt << "\n" << Cmd.lli  << " in thread number " << tid << endl;
+      cout << "Running Command: " << Cmd.opt  << "time taken " << time_taken_by_current_pass << endl;
 #endif
       // store the time taken by current pass
       passTime curr = {pass_name, time_taken_by_current_pass};
       curr_pq.push(curr);
     }
     
-    curr_pass_order.append(pass_name);
+    passTime pt = curr_pq.top();
+
+    curr_pass_order = curr_pass_order + string(" ") + pt.pass_name;
+
+    cout << "Appending " << pt.pass_name << " | Current Pass Order " << curr_pass_order << endl;
     pass_length++;
   }
  
@@ -168,7 +178,7 @@ int main(int argc, char** argv) {
   }
 
   // set openmp number of threads
-  //omp_set_num_threads(numThreads);
+  omp_set_num_threads(numThreads);
 
 //dir_name = string(input_combination_file) + "dir"; 
   //string create_dir_cmd = string("mkdir ") + dir_name;
