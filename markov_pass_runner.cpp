@@ -54,57 +54,36 @@ string dir_name;
 })                                         \
 
 
-class BoundMap {
-  public:
-    BoundMap() { };
-
-    bool in_range(){
-      if(pq.size() < MAX_NUM_PER_THREAD) return true;
-      return false;
-    }
-
-    void insert(string s, double d){
-      if(in_range()){
-        pq.push(RECORD(s,d));
-
-      } else if(pq.top().exec_time > d) {
-        pq.pop();
-        pq.push(RECORD(s,d));
-      }
-
-#ifdef BMAP_DEBUG
-      std::cout << "Inserting new element with time "<< d << ". Size " << pq.size() << " Worst time " << pq.top().exec_time << " Sequence: " << pq.top().pass_order << std::endl;
-#endif
-
-    } /* end of function insert */
-
-    void insert(RECORD r){
-      if(in_range()){
-        pq.push(r);
-
-      } else if(pq.top().exec_time > r.exec_time) {
-        pq.pop();
-        pq.push(r);
-      }
-    }
-
-    PQUEUE pq;
-};
-
-
 inline COMMAND::COMMAND(string pass_order, long double threadId) {
   // opt -pass1 -pass2 ./bcfile -o temp.out.threadId >> /dev/null
 
   // combination_file_name/temp.out.input_combination_filename
-  //string temp_name = dir_name + string("/temp.out.") + input_combination_file;
+  string temp_name = dir_name + string("/temp.out."); //+ input_combination_file;
   std::cout << "Running command " << pass_order << std::endl;
-  //opt = string("opt ") + pass_order + " ./"  + binaryName + " -o "+ temp_name  + "" + to_string(threadId) + " >> /dev/null";
+
+  opt = string("opt ") + pass_order + " ./"  + binaryName + " -o "+ temp_name  + "" + to_string(threadId) + " >> /dev/null";
   // Command to execute the file.
-  //
-  //    lli = string("lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
-  // lli = string("lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
+  lli = string("lli ") + temp_name + to_string(threadId) + " " + binaryArgs + to_string(threadId);
 }
 
+
+struct passTime
+{
+  string pass_name;
+  long time;
+};
+
+class PassTimeComparator
+{
+  public:
+    bool operator()(passTime& n1, passTime& n2)
+    {
+      if (n1.time > n2.time)
+        return true;
+      else
+        return false;
+    }
+};
 
 
 void cleanUpTheMess() {
@@ -128,12 +107,8 @@ vector<string>& getOptimizationPasses() {
 
 void runOptimizationPasses() {
   //map<string, double> optExecMap;
-
-
   std::map<string, long> after_pass_time;
 
-
-  map<long double, BoundMap> boundMaps;
   vector<string> &optimizationPasses = getOptimizationPasses();
 
   clock_t t1,t2;
@@ -142,23 +117,37 @@ void runOptimizationPasses() {
   string pass_name;
   int pass_length = 0;
   while(pass_length < MAX_PASS_LENGTH) {
+    string curr_pass_order = string("");
+    priority_queue< passTime, vector< passTime >, PassTimeComparator> curr_pq;
 #pragma omp parallel for private(pass_name)
     for( int i = 0; i < optimizationPasses.size() ; ++i ) {
       pass_name = optimizationPasses[i];
+      string temp_pass_order = curr_pass_order + string(" ") + pass_name;
       std::cout << pass_name << std::endl;
-      for(int j=0; j < RERUN_COUNT; j++) {
+      
+      // apply pass here
+      COMMAND Cmd(pass_name, tid);
+      _SYSTEM_CALL(Cmd.opt);
+
+      // run RERUN_COUNT number of times to get the time
         // START TIMER HERE
-        COMMAND Cmd(pass_name, tid);
-        // STOP TIMER HERE
+      for(int j=0; j < RERUN_COUNT; j++) {
+
       }
+      long time_taken_by_current_pass = 1000;
+      // STOP TIMER HERE
 #ifdef DEBUG
       cout << "Running Command: " << Cmd.opt << "\n" << Cmd.lli  << " in thread number " << tid << endl;
 #endif
-
+      // store the time taken by current pass
+      passTime curr = {pass_name, time_taken_by_current_pass};
+      curr_pq.push(curr);
     }
+    
+    curr_pass_order.append(pass_name);
     pass_length++;
   }
-
+ 
   cleanUpTheMess();
 }
 
@@ -166,37 +155,22 @@ int main(int argc, char** argv) {
 
   int numThreads = NUM_THREADS;
 
-  /*
-     if(argc > 1) {
-     binaryName = argv[1];
-     input_combination_file = argv[2];
-     binaryArgs = argv[3];
-     numThreads = atoi(argv[4]);
-  //        std::cout << binaryName << " " << binaryArgs << " " << numThreads << " " <<input_combination_file << endl;
+
+  if(argc > 1) {
+    binaryName = argv[1];
+    binaryArgs = argv[2];
+    numThreads = atoi(argv[3]);
+
+    std::cout << binaryName << " " << binaryArgs << " " << numThreads << " " << endl;//<< input_combination_file << endl;
   } else {
-  std::cout << "Usage: pass_runner <Binary Name> <NumThreads(optional)>" << std::endl;
-  abort();
+    std::cout << "Usage: pass_runner <Binary Name> <NumThreads(optional)>" << std::endl;
+    abort();
   }
-
-  // open a file in read mode.
-  ifstream infile; 
-  infile.open(input_combination_file);
-
-  string opt_order;
-  while(getline(infile, opt_order)) {
-  passOrder.push_back(opt_order);
-  }
-  */
-
-  // this will potentially print the contents of events.1 file
-#ifdef VERBOSE
-  cout << passOrder;
-#endif
 
   // set openmp number of threads
   //omp_set_num_threads(numThreads);
 
-  //dir_name = string(input_combination_file) + "dir"; 
+//dir_name = string(input_combination_file) + "dir"; 
   //string create_dir_cmd = string("mkdir ") + dir_name;
   //_SYSTEM_CALL(create_dir_cmd );
 
