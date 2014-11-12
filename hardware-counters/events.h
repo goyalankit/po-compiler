@@ -6,7 +6,7 @@
 #define IT3 10
 
 
-static int _G_EVENTS_AVAIL[] = {                           
+/*static int _G_EVENTS_AVAIL[] = {                           
     PAPI_TOT_CYC,
     PAPI_STL_ICY,
     PAPI_TOT_INS,
@@ -32,7 +32,12 @@ static int _G_EVENTS_AVAIL[] = {
     PAPI_L2_TCA,
     PAPI_L1_TCM,
     PAPI_L2_TCM
-};
+};*/
+
+
+static int _G_EVENTS_AVAIL[] = {
+    LOAD_HIT_PRE.SW_PF
+}
 
 //#define _G_EVENT_COUNT sizeof(_G_EVENTS) / sizeof( int )
 
